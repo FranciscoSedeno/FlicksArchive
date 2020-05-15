@@ -8,7 +8,7 @@ public class Elemento {
 	private Date fechaRetirada;
 	private String descripcion;
 	private boolean favorito;
-	private enum estadoVisualizacion{PENDIENTE, VIENDO, FINALIZADO};
+	static enum estadoVisualizacion{PENDIENTE, VIENDO, FINALIZADO};
 	private estadoVisualizacion estado;
 	private int notaUsuario;
 	
