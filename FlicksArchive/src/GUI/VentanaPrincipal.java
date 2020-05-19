@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JScrollBar;
 
 
 public class VentanaPrincipal extends JPanel {
@@ -34,7 +36,7 @@ public class VentanaPrincipal extends JPanel {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBorder(null);
 		tabbedPane.setPreferredSize(new Dimension(1920, 1020));
-		tabbedPane.setBounds(10, 11, 1800, 918);
+		tabbedPane.setBounds(10, 11, 1773, 918);
 		add(tabbedPane);
 		
 		JPanel Lista = new JPanel();
@@ -106,6 +108,7 @@ public class VentanaPrincipal extends JPanel {
 			}
 		});
 		Añadir.add(aceptar);
+
 
 	}
 }

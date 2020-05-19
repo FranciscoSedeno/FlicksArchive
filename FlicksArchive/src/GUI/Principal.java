@@ -5,6 +5,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 
 public class Principal {
 
@@ -19,7 +21,11 @@ public class Principal {
 		
 		VentanaPrincipal window = new VentanaPrincipal();
 		
-		marco.add(window);
+		JScrollPane sp = new JScrollPane(window, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		marco.add(sp);
+		
+//		JScrollBar barra = new JScrollBar();
+//		marco.add(barra);
 		
 		marco.setResizable(true);
 		marco.pack();
