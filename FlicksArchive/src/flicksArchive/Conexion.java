@@ -36,13 +36,22 @@ public class Conexion {
 			e.printStackTrace();
 		}
 	}
-	
+	public void inicializarDatos(Map<Integer,Elemento> lista,Set<String> plataformas) throws SQLException {
+		Statement st= conn.createStatement();
+		ResultSet rs= st.executeQuery("SELECT Titulo,FechaPublicacion,FechaRetirada,Descripcion,URL_Imagen,c.ID, Estado, Favorito, Nota,Nombre_Plataforma FROM "+nombre+" u JOIN Catalogo c on (c.ID=u.ID) ;");
+		while(rs.next()) {
+			lista.put(rs.getInt(6),new Elemento(rs.getString(1),rs.getDate(2),rs.getDate(3),rs.getString(4),rs.getString(5),rs.getInt(6),rs.getString(10),rs.getInt(7),rs.getBoolean(8),rs.getInt(9)));
+			plataformas.add(rs.getString(10).toUpperCase());
+		}
+		st.close();
+		
+	}
 	public List<Tupla> buscarPorTitulo(String titulo) throws SQLException{
 		List<Tupla> sol = new LinkedList<>();
 		Statement st = conn.createStatement();
-		ResultSet rs = st.executeQuery("SELECT ID, Titulo FROM Catalogo WHERE UPPER(Titulo) LIKE '%" + titulo.toUpperCase() + "%';");
+		ResultSet rs = st.executeQuery("SELECT ID, Titulo, URL_Imagen FROM Catalogo WHERE UPPER(Titulo) LIKE '%" + titulo.toUpperCase() + "%';");
 		while(rs.next()) {
-			sol.add(new Tupla(rs.getString(2),rs.getInt(1)));
+			sol.add(new Tupla(rs.getString(2),rs.getInt(1),rs.getString(3)));
 		}
 		st.close();
 		return sol;
@@ -50,9 +59,9 @@ public class Conexion {
 	public Elemento buscarElemento(int id) throws SQLException {
 		Statement st = conn.createStatement();
 		Elemento elem=null;
-		ResultSet rs = st.executeQuery("SELECT Titulo,FechaPublicacion,FechaRetirada,Descripcion,ID FROM Catalogo WHERE  ID="+id+";");
+		ResultSet rs = st.executeQuery("SELECT Titulo,FechaPublicacion,FechaRetirada,Descripcion,ID, Nombre_Plataforma FROM Catalogo WHERE  ID="+id+";");
 		if(rs.next()) {
-			elem=new Elemento(rs.getString(1), rs.getDate(2), rs.getDate(3), rs.getString(4), rs.getString(5), rs.getInt(6));
+			elem=new Elemento(rs.getString(1), rs.getDate(2), rs.getDate(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getString(7));
 		}
 		st.close();
 		return elem;

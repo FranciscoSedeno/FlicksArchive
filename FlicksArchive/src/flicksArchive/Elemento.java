@@ -6,7 +6,7 @@ import java.util.StringJoiner;
 public class Elemento {
 	private int id;
 	private String titulo;
-	private String Plataforma;
+	private String plataforma;
 	private Date fechaPublicacion;
 	private Date fechaRetirada;
 	private String descripcion;
@@ -19,19 +19,26 @@ public class Elemento {
 	
 	
 	
-	public Elemento(String titulo, Date fechaPublicacion, Date fechaRetirada, String descripcion, String img, int id) {
+	public Elemento(String titulo, Date fechaPublicacion, Date fechaRetirada, String descripcion, String img, int id, String plataforma) {
 		super();
 		this.titulo = titulo;
+		this.plataforma = plataforma;
 		this.fechaPublicacion = fechaPublicacion;
 		this.fechaRetirada = fechaRetirada;
 		this.descripcion = descripcion;
 		this.favorito = false;
 		this.estado = estadoVisualizacion.PENDIENTE;
-		this.notaUsuario = 10;
+		this.notaUsuario = 0;
 		URL_Imagen = img;
 		this.id = id;
 	}
-	
+	public Elemento(String titulo, Date fechaPublicacion, Date fechaRetirada, String descripcion, String img, int id,String plataforma,int  estado,boolean favorito,int nota) {
+		this(titulo, fechaPublicacion, fechaRetirada, descripcion, img, id,plataforma);
+		this.favorito = favorito;
+		this.estado = estadoVisualizacion.values()[estado];
+		this.notaUsuario = nota;
+
+	}
 	public void editarElemento() {
 		//while(!botonGuardar){
 			
@@ -41,6 +48,7 @@ public class Elemento {
 		//}
 	}
 	
+	//Devuelve los valores necesarios para almacenar el estado de un usuario con el elemento en la BD.
 	public String valores() {
 		StringJoiner sj=new StringJoiner(",");
 		sj.add(""+id);
@@ -54,13 +62,15 @@ public class Elemento {
 		return sj.toString();
 	}
 	
-	//Getters & Setters(por si acaso)
+	
+	
+	//Getters & Setters 
 	public String getPlataforma() {
-		return Plataforma;
+		return plataforma;
 	}
 
 	public void setPlataforma(String plataforma) {
-		Plataforma = plataforma;
+		this.plataforma = plataforma;
 	}
 	public int getId() {
 		return id;
@@ -119,5 +129,28 @@ public class Elemento {
 	public void setURL_Imagen(String uRL_Imagen) {
 		URL_Imagen = uRL_Imagen;
 	}
-
+	
+	/*
+	 * Funciones propias de objetos.
+	 */
+	public String toString() {
+		
+		StringJoiner sj=new StringJoiner(",");
+		sj.add("ELEMENTO: id: "+id);
+        sj.add("plataforma: "+plataforma);
+        sj.add("titulo: "+titulo);
+        sj.add("publicacion: "+fechaPublicacion.toString());
+        sj.add("retirada: "+fechaRetirada.toString());
+        sj.add("descripcion: "+descripcion);
+		
+		sj.add("estado: "+estado.toString());
+		if (favorito){
+			sj.add("favorito: SÍ");
+		} else {
+			sj.add("favorito: NO");
+		}
+		sj.add("nota: "+notaUsuario);
+		return sj.toString();
+		
+	}
 }
