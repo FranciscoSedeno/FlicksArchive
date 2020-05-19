@@ -1,6 +1,7 @@
 
 import java.sql.SQLException;
 
+import flicksArchive.Elemento;
 import flicksArchive.Lista;
 
 
@@ -10,8 +11,9 @@ public class Main {
 		// TODO Auto-generated method stub
 
 		
-		Lista prueba=new Lista("Alvaro");
+		Lista prueba=new Lista("Fran");
 		System.out.println(prueba.toString());
+		prueba.getConexion().finalizarConexion();
 	}
 
 }
