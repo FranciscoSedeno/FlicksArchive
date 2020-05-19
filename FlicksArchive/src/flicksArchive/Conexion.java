@@ -78,7 +78,9 @@ public class Conexion {
 		st.close();
 	}
 	
-	
+	public void finalizarConexion() throws SQLException{
+		conn.close();
+	}
 	
 }
 

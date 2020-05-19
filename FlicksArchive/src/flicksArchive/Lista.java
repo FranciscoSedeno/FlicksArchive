@@ -76,4 +76,7 @@ public class Lista {
 		return sj.toString();
 	}
 	
+	public Conexion getConexion(){
+		return conexion;
+	}
 }
