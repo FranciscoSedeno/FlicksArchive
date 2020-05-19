@@ -24,9 +24,6 @@ public class Principal {
 		JScrollPane sp = new JScrollPane(window, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		marco.add(sp);
 		
-//		JScrollBar barra = new JScrollBar();
-//		marco.add(barra);
-		
 		marco.setResizable(true);
 		marco.pack();
 		marco.setVisible(true);
