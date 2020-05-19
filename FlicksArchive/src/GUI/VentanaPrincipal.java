@@ -6,6 +6,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.swing.JTabbedPane;
 import javax.swing.ImageIcon;
@@ -41,7 +43,13 @@ public class VentanaPrincipal extends JPanel {
 		
 		JButton flechader = new JButton("");
 		flechader.setBounds(1717, 11, 48, 48);
-		flechader.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/img/ra.png")));
+		try {
+			flechader.setIcon(new ImageIcon(new URL("http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/48/Actions-go-next-icon.png")));
+		} catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		//flechader.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/img/ra.png")));
 		Lista.add(flechader);
 		flechader.addActionListener(new ActionListener() {
 			
