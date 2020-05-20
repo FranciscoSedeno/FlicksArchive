@@ -141,17 +141,7 @@ public class VentanaPrincipal extends JPanel {
 		buscador = new JTextField();
 		buscador.setBounds(0, 21, 432, 23);
 		panelBuscador.add(buscador);
-		buscador.addActionListener(new ActionListener() 
-		{
-			
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				// TODO Auto-generated method stub
-				buscador.setText("");
-			}
-		});
-		buscador.setColumns(10);
+		
 		
 		JLabel busca = new JLabel("Buscador:");
 		busca.setBounds(0, 0, 65, 14);
@@ -175,6 +165,59 @@ public class VentanaPrincipal extends JPanel {
 		wl_panel_2.setAlignment(FlowLayout.LEFT);
 		panelBusqueda.setLayout(wl_panel_2);
 		scrollPane_1.setViewportView(panelBusqueda);
+		
+		buscador.addActionListener(new ActionListener() 
+		{
+			
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				panelBusqueda.removeAll();
+				// TODO Auto-generated method stub
+				//JOptionPane.showMessageDialog(aceptar, "Resultado de la busqueda");
+				try 
+				{
+					String buscado = buscador.getText();
+					List<Tupla> listaTuplas = botones.buscarElementoNuevo(buscado);
+					for(Tupla tupla : listaTuplas)
+					{
+						JButton Boton = new JButton("");
+						Boton.setForeground(new Color(0, 255, 51));
+						Boton.setBackground(new Color(102, 51, 0));
+						Boton.setMinimumSize(new Dimension(200, 300));
+						Boton.setMaximumSize(new Dimension(200, 300));
+						Boton.setPreferredSize(new Dimension(200, 300));
+						Boton.setBounds(10, 24, 200, 300);
+						Boton.setIcon(new ImageIcon(new URL(tupla.getUrl_img())));
+						Boton.addActionListener(new ActionListener() 
+						{
+							
+							@Override
+							public void actionPerformed(ActionEvent e) 
+							{
+								// TODO Auto-generated method stub
+								JFrame ventanaAccion = new confirmarAccion(tupla.getId(), tupla.getTitulo(), "Añadir", botones, panel);
+								
+								ventanaAccion.setVisible(true);
+								
+								
+							}
+						});
+						panelBusqueda.add(Boton);
+						panelBusqueda.updateUI();
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (MalformedURLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		buscador.setColumns(10);
+		
 		aceptar.addActionListener(new ActionListener() 
 		{
 			
