@@ -31,6 +31,11 @@ public class Lista {
 		return conexion.buscarPorTitulo(titulo);//Se muestra img y titulo de cada elemento de listaMostrada al usuario
 	}
 	
+	//Devuelve la lista
+	public Collection<Elemento> getListaActual()
+	{
+		return listaElementos.values();
+	}
 	
 	/*
 	 * Funciones para manipular la Lista de Elementos

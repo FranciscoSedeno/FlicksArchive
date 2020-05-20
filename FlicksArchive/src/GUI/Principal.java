@@ -3,30 +3,59 @@ package GUI;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
+import flicksArchive.Lista;
+
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+
 public class Principal {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		JFrame marco = new JFrame("Flicks Archive");
-		Rectangle rec = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
-		
-		marco.setPreferredSize(new Dimension(rec.width, rec.height));
-		
-		
-		
-		VentanaPrincipal window = new VentanaPrincipal();
-		
-		JScrollPane sp = new JScrollPane(window, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		marco.add(sp);
-		
-		marco.setResizable(true);
-		marco.pack();
-		marco.setVisible(true);
+		try 
+		{
+			JFrame marco = new JFrame("Flicks Archive");
+			Rectangle rec = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+			Lista prueba;
+			
+				prueba = new Lista("Fran");
+			
+			
+			marco.setPreferredSize(new Dimension(rec.width, rec.height));
+			GridBagLayout gridBagLayout = new GridBagLayout();
+			gridBagLayout.columnWidths = new int[]{0, 1902, 0, 0};
+			gridBagLayout.rowHeights = new int[]{0, 983, 0, 0};
+			gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+			gridBagLayout.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+			marco.getContentPane().setLayout(gridBagLayout);
+			
+			
+			
+			VentanaPrincipal window = new VentanaPrincipal(prueba);
+			
+			//JScrollPane sp = new JScrollPane(window, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			GridBagConstraints gbc_window = new GridBagConstraints();
+			gbc_window.insets = new Insets(0, 0, 5, 5);
+			gbc_window.fill = GridBagConstraints.BOTH;
+			gbc_window.gridx = 1;
+			gbc_window.gridy = 1;
+			marco.getContentPane().add(window, gbc_window);
+			
+			marco.setResizable(true);
+			marco.pack();
+			marco.setVisible(true);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.err.println("Error accediendo a la Base de datos");
+			System.exit(-1);
+		}
 		
 	}
 
