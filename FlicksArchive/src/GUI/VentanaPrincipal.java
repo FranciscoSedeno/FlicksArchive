@@ -18,6 +18,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import flicksArchive.Elemento;
@@ -126,6 +127,10 @@ public class VentanaPrincipal extends JPanel {
 					public void actionPerformed(ActionEvent e) 
 					{
 						// TODO Auto-generated method stub
+						
+						JFrame gestion = new VentanaGestion("Gestionar elemento", elemento);
+						
+						gestion.setVisible(true);
 						
 					}
 				});
