@@ -1,8 +1,10 @@
 
 import java.sql.SQLException;
+import java.util.List;
 
 import flicksArchive.Elemento;
 import flicksArchive.Lista;
+import flicksArchive.Tupla;
 
 
 public class Main {
@@ -12,7 +14,12 @@ public class Main {
 
 		
 		Lista prueba=new Lista("Fran");
-		System.out.println(prueba.toString());
+		List<Tupla> listaTuplas = prueba.buscarElementoNuevo("B");
+//		System.out.println(prueba.toString());
+		for (Tupla tupla : listaTuplas) 
+		{
+			System.out.println(tupla.getTitulo() + " " + tupla.getUrl_img());
+		}
 		prueba.getConexion().finalizarConexion();
 	}
 

@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import flicksArchive.Elemento;
 import flicksArchive.Elemento.estadoVisualizacion;
+import flicksArchive.Lista;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
@@ -29,13 +30,15 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.SwingConstants;
 
 public class VentanaGestion extends JFrame {
 
 	private JPanel contentPane;
 	private Elemento elem;
 
-	public VentanaGestion(String titulo,Elemento elemento) {
+	public VentanaGestion(String titulo,Elemento elemento, Lista lista, JPanel panelLista) 
+	{
 		super(titulo);
 		elem = elemento;
 		setPreferredSize(new Dimension(800, 600));
@@ -95,7 +98,9 @@ public class VentanaGestion extends JFrame {
         panel.add(lblDescripcin);
         
         JLabel desc = new JLabel(elem.getDescripcion());
-        desc.setBounds(290, 202, 232, 59);
+        desc.setVerticalAlignment(SwingConstants.TOP);
+        desc.setHorizontalAlignment(SwingConstants.LEFT);
+        desc.setBounds(290, 202, 343, 107);
         panel.add(desc);
         
         JLabel imagen = new JLabel();
@@ -139,7 +144,25 @@ public class VentanaGestion extends JFrame {
         		dispose();
         	}
         });
-        btnGuardar.setBounds(515, 341, 89, 23);
+        btnGuardar.setBounds(194, 341, 89, 23);
         panel.add(btnGuardar);
+        
+        JButton btnEliminar = new JButton("Eliminar");
+        btnEliminar.addActionListener(new ActionListener() 
+        {
+        	public void actionPerformed(ActionEvent e) 
+        	{
+        		lista.eliminarElemento(elemento.getId());
+        		
+        		JFrame ventanaAccion = new confirmarAccion(elemento.getId(), elemento.getTitulo(), "Eliminar", lista, panelLista);
+				
+				ventanaAccion.setVisible(true);
+        		
+        		dispose();
+        	}
+
+        });
+        btnEliminar.setBounds(412, 340, 89, 23);
+        panel.add(btnEliminar);
 	}
 }

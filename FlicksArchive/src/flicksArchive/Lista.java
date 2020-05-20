@@ -31,6 +31,16 @@ public class Lista {
 		return conexion.buscarPorTitulo(titulo);//Se muestra img y titulo de cada elemento de listaMostrada al usuario
 	}
 	
+	public Elemento extraerElementoBD(int id) throws SQLException
+	{
+		return conexion.buscarElemento(id);
+	}
+	
+	public void actualizar() throws SQLException
+	{
+		conexion.actualizar(listaElementos.values());
+	}
+	
 	//Devuelve la lista
 	public Collection<Elemento> getListaActual()
 	{

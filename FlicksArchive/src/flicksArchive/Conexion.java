@@ -59,14 +59,14 @@ public class Conexion {
 	public Elemento buscarElemento(int id) throws SQLException {
 		Statement st = conn.createStatement();
 		Elemento elem=null;
-		ResultSet rs = st.executeQuery("SELECT Titulo,FechaPublicacion,FechaRetirada,Descripcion,ID, Nombre_Plataforma FROM Catalogo WHERE  ID="+id+";");
+		ResultSet rs = st.executeQuery("SELECT Titulo,FechaPublicacion,FechaRetirada,Descripcion, URL_Imagen,ID, Nombre_Plataforma FROM Catalogo WHERE  ID="+id+";");
 		if(rs.next()) {
 			elem=new Elemento(rs.getString(1), rs.getDate(2), rs.getDate(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getString(7));
 		}
 		st.close();
 		return elem;
 	}
-	public void actualizar(List<Elemento> l) throws SQLException {
+	public void actualizar(Collection<Elemento> l) throws SQLException {
 		Statement st= conn.createStatement();
 		
 		st.executeUpdate("DELETE  FROM "+nombre+" ;");

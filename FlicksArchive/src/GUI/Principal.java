@@ -3,6 +3,8 @@ package GUI;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
@@ -51,6 +53,24 @@ public class Principal {
 			marco.setResizable(true);
 			marco.pack();
 			marco.setVisible(true);
+			
+			marco.addWindowListener(new WindowAdapter() 
+			{
+				@Override
+				public void windowClosing(WindowEvent windowEvent)
+				{
+					try 
+					{
+						prueba.actualizar();
+						prueba.getConexion().finalizarConexion();
+						System.exit(0);
+					} catch (SQLException e) 
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			});
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.err.println("Error accediendo a la Base de datos");
