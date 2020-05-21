@@ -62,6 +62,10 @@ public class Lista {
 		return listaElementos.get(id);
 	}
 	
+	public boolean estaElemento(int id) {
+        return listaElementos.containsKey(id);
+    }
+	
 	
 	
 	

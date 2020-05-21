@@ -27,7 +27,7 @@ public class Principal {
 			Rectangle rec = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
 			Lista prueba;
 			
-				prueba = new Lista("Fran");
+			prueba = new Lista("Guillermo");
 			
 			
 			marco.setPreferredSize(new Dimension(rec.width, rec.height));
