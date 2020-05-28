@@ -21,15 +21,18 @@ public class ControladorBotones implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		String[] comando = e.getActionCommand().split("[ ]");
-		Elemento elem = lista.conseguirElemento(Integer.parseInt(comando[1]));
+		Elemento elem; 
 		try {
 			if (comando[0].equals("LISTA")) {
+				elem = lista.conseguirElemento(Integer.parseInt(comando[1]));
 				VentanaGestion gestion = new VentanaGestion("Gestionar elemento", elem, lista, ventana);
 				ControladorGestion contGestion = new ControladorGestion(gestion,lista, ventana);
 				gestion.controlador(contGestion);
 				gestion.setVisible(true);
 			} else if (comando[0].equals("BUSCA")) {
+				elem = lista.extraerElementoBD(Integer.parseInt(comando[1]));
 				confirmarAccion confAc = new confirmarAccion(elem.getId(), ventana, elem.getTitulo(), "Añadir", lista);
+				
 				ControladorAccion contAc = new ControladorAccion(lista, ventana,confAc);
 				confAc.controlador(contAc);
 				confAc.setVisible(true);
@@ -37,7 +40,8 @@ public class ControladorBotones implements ActionListener {
 			
 			
 		} catch (Exception exc) {
-			JOptionPane.showMessageDialog(ventana, exc.getMessage());
+			System.err.println(exc.getMessage());
+			//JOptionPane.showMessageDialog(ventana, exc.getMessage());
 		}
 		
 		

@@ -13,25 +13,35 @@ public class ControladorAccion implements ActionListener {
 	
 	private Lista lista;
 	private VentanaPrincipal ventana;
+	private VentanaGestion venGes;
 	private confirmarAccion confAc;
 	
-	public ControladorAccion(Lista l, VentanaPrincipal v, confirmarAccion confAc) {
+	public ControladorAccion(Lista l, VentanaPrincipal v, confirmarAccion ca, VentanaGestion vg) {
 		// TODO Auto-generated constructor stub
 		lista = l;
 		ventana = v;
-		this.confAc = confAc;
+		venGes = vg;
+		confAc = ca;
+	}
+	
+	public ControladorAccion(Lista l, VentanaPrincipal v, confirmarAccion ca) {
+		// TODO Auto-generated constructor stub
+		lista = l;
+		ventana = v;
+		confAc = ca;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		String[] comando = e.getActionCommand().split("[ ]");
-		Elemento elem = lista.conseguirElemento(Integer.parseInt(comando[2]));
-		
+		Elemento elem;
 		try {
 			if (comando[0].equals("Añadir") && comando[1].equals("SI")) {
 				try 
 				{
+					elem = lista.extraerElementoBD(Integer.parseInt(comando[2]));
+
 					lista.añadirElemento(lista.extraerElementoBD(elem.getId()));
 				} catch (SQLException e1) 
 				{
@@ -39,14 +49,20 @@ public class ControladorAccion implements ActionListener {
 					e1.printStackTrace();
 				}
 			} else if (comando[0].equals("Eliminar") && comando[1].equals("SI")) {
-					lista.eliminarElemento(elem.getId());
-					
-					ventana.refrescar(lista);
+				elem = lista.conseguirElemento(Integer.parseInt(comando[2]));
+				lista.eliminarElemento(elem.getId());
+				venGes.dispose();
+				
+				
+				
 			}
 			confAc.dispose();
+			System.out.println("HOLA");
+			ventana.refrescar(lista);
 			
 		} catch (Exception exc) {
-			JOptionPane.showMessageDialog(ventana, e.getActionCommand());
+			
+			JOptionPane.showMessageDialog(ventana, exc.getMessage());
 		}
 		
 	}

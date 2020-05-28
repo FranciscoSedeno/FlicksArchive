@@ -28,16 +28,15 @@ public class ControladorGestion implements ActionListener {
 				
 				gestion.actualizarelemento();
 				
+				gestion.dispose();
+				
 			} else if (comando[0].equals("ELIMINAR")) {
-				lista.eliminarElemento(elem.getId());
 				
 				confirmarAccion ventanaAccion = new confirmarAccion(elem.getId(), ventana,elem.getTitulo(), "Eliminar", lista);
-				ControladorAccion contAcc = new ControladorAccion(lista, ventana, ventanaAccion);
+				ControladorAccion contAcc = new ControladorAccion(lista, ventana, ventanaAccion, gestion);
 				ventanaAccion.controlador(contAcc);
 				
 				ventanaAccion.setVisible(true);
-        		
-        		gestion.dispose();
 				
 			}
 		} catch (Exception exc) {

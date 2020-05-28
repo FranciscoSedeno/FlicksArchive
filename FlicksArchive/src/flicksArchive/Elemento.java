@@ -90,7 +90,7 @@ public class Elemento {
 				throw new IllegalArgumentException("ETIQUETA POR DEFECTO NO RECOGIDA");
 			}
 			e.inc();
-			etiquetasPre[contEtiqUsu] = e;
+			etiquetasPre[contEtiqD] = e;
 			contEtiqD++;
 		}else {
 			throw new IllegalArgumentException("INTENTO DE AÑADIR MÁS ETIQUETAS DE LAS POSIBLES");

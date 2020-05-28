@@ -243,21 +243,6 @@ public class VentanaPrincipal extends JPanel {
 				Boton.setIcon(new ImageIcon(new URL(tupla.getUrl_img())));
 				Boton.setActionCommand("BUSCA " + String.valueOf(tupla.getId()));
 				Boton.addActionListener(contBot);
-				/*Boton.setActionCommand("Añadir " + String.valueOf(tupla.getId()));
-				Boton.addActionListener(contConf);*/
-				/*Boton.addActionListener(new ActionListener() 
-				{
-					
-					@Override
-					public void actionPerformed(ActionEvent e) 
-					{
-						JFrame ventanaAccion = new confirmarAccion(tupla.getId(), v, tupla.getTitulo(), "Añadir", botones, panel);
-
-						ventanaAccion.setVisible(true);
-						
-						
-					}
-				});*/
 				panelBusqueda.add(Boton);
 				panelBusqueda.updateUI();
 			}
