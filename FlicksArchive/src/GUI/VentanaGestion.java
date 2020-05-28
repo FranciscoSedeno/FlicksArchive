@@ -1,6 +1,5 @@
 package GUI;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 
@@ -34,10 +33,11 @@ import javax.swing.SwingConstants;
 
 public class VentanaGestion extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private Elemento elem;
 
-	public VentanaGestion(String titulo,Elemento elemento, Lista lista, JPanel panelLista) 
+	public VentanaGestion(String titulo,VentanaPrincipal ventana, Elemento elemento, Lista lista, JPanel panelLista) 
 	{
 		super(titulo);
 		elem = elemento;
@@ -154,7 +154,7 @@ public class VentanaGestion extends JFrame {
         	{
         		lista.eliminarElemento(elemento.getId());
         		
-        		JFrame ventanaAccion = new confirmarAccion(elemento.getId(), elemento.getTitulo(), "Eliminar", lista, panelLista);
+        		JFrame ventanaAccion = new confirmarAccion(elemento.getId(), ventana,elemento.getTitulo(), "Eliminar", lista, panelLista);
 				
 				ventanaAccion.setVisible(true);
         		

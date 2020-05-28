@@ -16,17 +16,9 @@ public class Conexion {
 	public Conexion(String nombre) {
 		
 		try {
-			this.nombre = nombre;
+			this.nombre = nombre.toUpperCase();
 			Class.forName(JDBC_DRIVER);
 			conn = DriverManager.getConnection(DB_URL + "/" + DB_SCHEMA,USER,PASS);
-			
-			Statement st= conn.createStatement();
-			ResultSet rs= st.executeQuery("SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'flicksdb' AND  TABLE_NAME = '"+nombre+"';");
-			if(!rs.next()) {
-				st.executeUpdate("CREATE TABLE "+nombre+" (ID int(11), Estado int(1), Favorito Bit(1), Nota int(2),PRIMARY KEY (ID));");
-			}
-			
-			st.close();
 			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -38,7 +30,7 @@ public class Conexion {
 	}
 	public void inicializarDatos(Map<Integer,Elemento> lista,Set<String> plataformas) throws SQLException {
 		Statement st= conn.createStatement();
-		ResultSet rs= st.executeQuery("SELECT Titulo,FechaPublicacion,FechaRetirada,Descripcion,URL_Imagen,c.ID, Estado, Favorito, Nota,Nombre_Plataforma FROM "+nombre+" u JOIN Catalogo c on (c.ID=u.ID) ;");
+		ResultSet rs= st.executeQuery("SELECT Titulo,FechaPublicacion,FechaRetirada,Descripcion,URL_Imagen,c.ID, Estado, Favorito, Nota,Nombre_Plataforma FROM Usuario u JOIN Catalogo c on (c.ID=u.ID) WHERE u.NombreUsuario LIKE '"+nombre+"' ;");
 		while(rs.next()) {
 			lista.put(rs.getInt(6),new Elemento(rs.getString(1),rs.getDate(2),rs.getDate(3),rs.getString(4),rs.getString(5),rs.getInt(6),rs.getString(10),rs.getInt(7),rs.getBoolean(8),rs.getInt(9)));
 			plataformas.add(rs.getString(10).toUpperCase());
@@ -69,11 +61,11 @@ public class Conexion {
 	public void actualizar(Collection<Elemento> l) throws SQLException {
 		Statement st= conn.createStatement();
 		
-		st.executeUpdate("DELETE  FROM "+nombre+" ;");
+		st.executeUpdate("DELETE  FROM Usuario WHERE NombreUsuario LIKE '"+nombre+"' ;");
 		
 		
 		for(Elemento e:l) {
-			st.execute("INSERT INTO "+nombre+" VALUES ("+e.valores()+" );");
+			st.execute("INSERT INTO Usuario VALUES ( '"+nombre+"',"+e.valores()+" );");
 		}
 		st.close();
 	}

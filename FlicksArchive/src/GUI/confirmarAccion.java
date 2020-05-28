@@ -26,7 +26,7 @@ public class confirmarAccion extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public confirmarAccion(int ID, String titulo, String accion, Lista lista, JPanel panel) 
+	public confirmarAccion(int ID, VentanaPrincipal ventanaprincipal, String titulo, String accion, Lista lista, JPanel panel) 
 	{
 		super(accion);
 		this.ID = ID;
@@ -64,7 +64,7 @@ public class confirmarAccion extends JFrame {
 				{
 					lista.eliminarElemento(ID);
 					
-					VentanaPrincipal.refrescar(panel, lista);
+					ventanaprincipal.refrescar(panel, lista);
 				}
 				dispose();
 			}

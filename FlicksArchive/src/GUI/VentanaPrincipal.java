@@ -41,12 +41,15 @@ import javax.swing.event.ChangeEvent;
 
 
 public class VentanaPrincipal extends JPanel {
+	
+	
 	public JTextField buscador;
 	private Lista botones;
-			
-	/**
-	 * Create the panel.
-	 */
+	private JButton aceptar;
+	private List<JButton> botonesLista = new ArrayList<JButton>();
+	private List<JButton> botonesBusca = new ArrayList<JButton>();
+	private JPanel panelBusqueda;
+	private JPanel panel;
 	
 	
 	public VentanaPrincipal(Lista prueba) {
@@ -104,7 +107,7 @@ public class VentanaPrincipal extends JPanel {
 		gbc_scrollPane.gridy = 0;
 		contentPane.add(scrollPane, gbc_scrollPane);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		scrollPane.setViewportView(panel);
 		WrapLayout wl_panel = new WrapLayout(FlowLayout.CENTER, 5, 5);
 		wl_panel.setAlignment(FlowLayout.LEFT);
@@ -155,7 +158,7 @@ public class VentanaPrincipal extends JPanel {
 		busca.setBounds(0, 0, 65, 14);
 		panelBuscador.add(busca);
 		
-		JButton aceptar = new JButton("Buscar");
+		aceptar = new JButton("Buscar");
 		aceptar.setBounds(437, 21, 89, 23);
 		panelBuscador.add(aceptar);
 		
@@ -177,126 +180,15 @@ public class VentanaPrincipal extends JPanel {
 		gbc_scrollPane_1.gridy = 0;
 		panel_1.add(scrollPane_1, gbc_scrollPane_1);
 		
-		JPanel panelBusqueda = new JPanel();
+		panelBusqueda = new JPanel();
 		panelBusqueda.setBorder(null);
 		WrapLayout wl_panel_2 = new WrapLayout(FlowLayout.CENTER, 5, 5);
 		wl_panel_2.setAlignment(FlowLayout.LEFT);
 		panelBusqueda.setLayout(wl_panel_2);
 		scrollPane_1.setViewportView(panelBusqueda);
 		
-		buscador.addActionListener(new ActionListener() 
-		{
-			
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				panelBusqueda.removeAll();
-				// TODO Auto-generated method stub
-				//JOptionPane.showMessageDialog(aceptar, "Resultado de la busqueda");
-				try 
-				{
-					String buscado = buscador.getText();
-					List<Tupla> listaTuplas = botones.buscarElementoNuevo(buscado);
-					for(Tupla tupla : listaTuplas)
-					{
-						if(!botones.estaElemento(tupla.getId()))
-						{
-							JButton Boton = new JButton("");
-							Boton.setForeground(new Color(0, 255, 51));
-							Boton.setBackground(Color.BLACK);
-							Boton.setMinimumSize(new Dimension(200, 300));
-							Boton.setMaximumSize(new Dimension(200, 300));
-							Boton.setPreferredSize(new Dimension(200, 300));
-							Boton.setBounds(10, 24, 200, 300);
-							Boton.setIcon(new ImageIcon(new URL(tupla.getUrl_img())));
-							Boton.addActionListener(new ActionListener() 
-							{
-								
-								@Override
-								public void actionPerformed(ActionEvent e) 
-								{
-									// TODO Auto-generated method stub
-									JFrame ventanaAccion = new confirmarAccion(tupla.getId(), tupla.getTitulo(), "Añadir", botones, panel);
-									
-									ventanaAccion.setVisible(true);
-									
-									
-								}
-							});
-							panelBusqueda.add(Boton);
-							panelBusqueda.updateUI();
-						}
-						
-					}
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (MalformedURLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-			}
-		});
 		buscador.setColumns(10);
-		
-		aceptar.addActionListener(new ActionListener() 
-		{
-			
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				panelBusqueda.removeAll();
-				// TODO Auto-generated method stub
-				//JOptionPane.showMessageDialog(aceptar, "Resultado de la busqueda");
-				try 
-				{
-					String buscado = buscador.getText();
-					List<Tupla> listaTuplas = botones.buscarElementoNuevo(buscado);
-					for(Tupla tupla : listaTuplas)
-					{
-						if(!botones.estaElemento(tupla.getId()))
-						{
-							JButton Boton = new JButton("");
-							Boton.setForeground(new Color(0, 255, 51));
-							Boton.setBackground(Color.BLACK);
-							Boton.setMinimumSize(new Dimension(200, 300));
-							Boton.setMaximumSize(new Dimension(200, 300));
-							Boton.setPreferredSize(new Dimension(200, 300));
-							Boton.setBounds(10, 24, 200, 300);
-							Boton.setIcon(new ImageIcon(new URL(tupla.getUrl_img())));
-							Boton.addActionListener(new ActionListener() 
-							{
-								
-								@Override
-								public void actionPerformed(ActionEvent e) 
-								{
-									// TODO Auto-generated method stub
-									JFrame ventanaAccion = new confirmarAccion(tupla.getId(), tupla.getTitulo(), "Añadir", botones, panel);
-									
-									ventanaAccion.setVisible(true);
-									
-									
-								}
-							});
-							panelBusqueda.add(Boton);
-							panelBusqueda.updateUI();
-						}
-						
-					}
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (MalformedURLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-			}
-		});
-		
-		
-		
+
 		tabbedPane.addChangeListener(new ChangeListener() 
 		{
 			@Override
@@ -312,8 +204,10 @@ public class VentanaPrincipal extends JPanel {
 		});
 	}
 	
-	public static void refrescar(JPanel panel, Lista botones)
+	public void refrescar(JPanel panel, Lista botones)
 	{
+		VentanaPrincipal v = this;
+		botonesLista.clear();
 		panel.removeAll();
 		for(Elemento elemento : botones.getListaActual())
 		{
@@ -333,9 +227,9 @@ public class VentanaPrincipal extends JPanel {
 					@Override
 					public void actionPerformed(ActionEvent e) 
 					{
-						// TODO Auto-generated method stub
+						// TOxDO Auto-generated method stub
 						
-						JFrame gestion = new VentanaGestion("Gestionar elemento", elemento, botones, panel);
+						JFrame gestion = new VentanaGestion("Gestionar elemento", v,elemento, botones, panel);
 						
 						
 						
@@ -344,13 +238,61 @@ public class VentanaPrincipal extends JPanel {
 					}
 				});
 				panel.add(Boton);
+				botonesLista.add(Boton);
 				panel.updateUI();
 			} catch (MalformedURLException e1) {
-				// TODO Auto-generated catch block
+				// TODxO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
 
+	}
+	
+	public void controlador (ActionListener ctr) {
+		aceptar.addActionListener(ctr);
+		aceptar.setActionCommand("ACEPTAR");
+		buscador.addActionListener(ctr);
+		buscador.setActionCommand("ACEPTAR");
+		
+		
+	}
+
+	public void mostrarbusqueda() throws MalformedURLException, SQLException {
+		VentanaPrincipal v = this;
+		botonesBusca.clear();
+		panelBusqueda.removeAll();
+		String buscado = buscador.getText();
+		List<Tupla> listaTuplas = botones.buscarElementoNuevo(buscado);
+		for(Tupla tupla : listaTuplas)
+		{
+			if(!botones.estaElemento(tupla.getId()))
+			{
+				JButton Boton = new JButton("");
+				Boton.setForeground(new Color(0, 255, 51));
+				Boton.setBackground(Color.BLACK);
+				Boton.setMinimumSize(new Dimension(200, 300));
+				Boton.setMaximumSize(new Dimension(200, 300));
+				Boton.setPreferredSize(new Dimension(200, 300));
+				Boton.setBounds(10, 24, 200, 300);
+				Boton.setIcon(new ImageIcon(new URL(tupla.getUrl_img())));
+				Boton.addActionListener(new ActionListener() 
+				{
+					
+					@Override
+					public void actionPerformed(ActionEvent e) 
+					{
+						// TOxDO Auto-generated method stub
+						JFrame ventanaAccion = new confirmarAccion(tupla.getId(), v, tupla.getTitulo(), "Añadir", botones, panel);
+						
+						ventanaAccion.setVisible(true);
+						
+						
+					}
+				});
+				panelBusqueda.add(Boton);
+				panelBusqueda.updateUI();
+			}
+		}	
 	}
 	
 }

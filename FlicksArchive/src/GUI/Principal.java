@@ -27,7 +27,7 @@ public class Principal {
 			Rectangle rec = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
 			Lista prueba;
 			
-			prueba = new Lista("Hielito");
+			prueba = new Lista("Guillermo");
 			
 			
 			marco.setPreferredSize(new Dimension(rec.width, rec.height));
@@ -52,6 +52,8 @@ public class Principal {
 			
 			marco.setResizable(true);
 			marco.pack();
+			Controlador ctr = new Controlador(prueba, window);
+			window.controlador(ctr);
 			marco.setVisible(true);
 			
 			marco.addWindowListener(new WindowAdapter() 
