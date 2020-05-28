@@ -8,9 +8,6 @@ import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-
 import flicksArchive.Lista;
 
 import java.awt.GridBagLayout;

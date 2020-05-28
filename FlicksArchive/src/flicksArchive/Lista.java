@@ -10,7 +10,7 @@ public class Lista {
 	private Set<String> listaPlataformas;
 	private Conexion conexion;
 	//private Ordenacion ordenacion;
-	//private Filtro filtro;
+	private Filtro filtro=new Filtro();
 	//private List<Notificaciones> listaNotificaciones;
 	
 	public Lista(String nombre) throws SQLException {
@@ -18,7 +18,7 @@ public class Lista {
 		conexion = new Conexion(nombreUsuario);
 		listaElementos= new HashMap<Integer, Elemento>();
 		listaPlataformas=new TreeSet<String>();
-		conexion.inicializarDatos(listaElementos,listaPlataformas);
+		conexion.inicializarDatos(listaElementos,listaPlataformas,filtro);
 		
 		
 	}
@@ -46,7 +46,10 @@ public class Lista {
 	{
 		return listaElementos.values();
 	}
-	
+	//Devuelve la lista de acuerdo a los filtros
+	public Collection<Elemento> getListaFiltrada(){
+		return filtro.filtrado(listaElementos.values());
+	}
 	/*
 	 * Funciones para manipular la Lista de Elementos
 	 */

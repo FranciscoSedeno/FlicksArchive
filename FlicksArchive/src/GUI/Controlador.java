@@ -3,12 +3,13 @@ package GUI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import flicksArchive.Lista;
 
-public class Controlador implements ActionListener {
+public class Controlador implements ActionListener, ChangeListener {
 	
 	private Lista lista;
 	private VentanaPrincipal ventana;
@@ -23,11 +24,26 @@ public class Controlador implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		String comando = e.getActionCommand();
-		System.out.println("HEY HEY");
 		try {
 			if (comando.equals("ACEPTAR")) {
-				System.out.println("ME CAGO EN MI PUTA VIDA ESTOY HASTA LOS COJONES DE LA UNIVERSIDAD");
 				ventana.mostrarbusqueda();
+			}
+			
+		} catch (Exception exc){
+			JOptionPane.showMessageDialog(ventana, exc.getMessage());
+		}
+		
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		
+		try {
+			if(ventana.tabbedPane.getSelectedIndex() == 0)
+			{
+				ventana.refrescar(lista);
+				ventana.buscador.setText("");
+		    	ventana.panelBusqueda.removeAll();
 			}
 			
 		} catch (Exception exc){

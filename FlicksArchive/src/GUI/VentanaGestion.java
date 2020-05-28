@@ -1,8 +1,6 @@
 package GUI;
 
 import java.awt.Color;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -13,20 +11,14 @@ import flicksArchive.Lista;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.awt.GridBagConstraints;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.ListSelectionModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingConstants;
@@ -36,8 +28,17 @@ public class VentanaGestion extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private Elemento elem;
+	private JButton btnGuardar;
+	private JButton btnEliminar;
+	private JRadioButton rdbtnFavorito;
+	@SuppressWarnings("rawtypes")
+	private JComboBox CBnotas;
+	@SuppressWarnings("rawtypes")
+	private JComboBox CBestado;	
 
-	public VentanaGestion(String titulo,VentanaPrincipal ventana, Elemento elemento, Lista lista, JPanel panelLista) 
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public VentanaGestion(String titulo, Elemento elemento, Lista lista,VentanaPrincipal ventana) 
 	{
 		super(titulo);
 		elem = elemento;
@@ -118,51 +119,45 @@ public class VentanaGestion extends JFrame {
 			e.printStackTrace();
 		}
         
-        JRadioButton rdbtnFavorito = new JRadioButton("Favorito");        
+        rdbtnFavorito = new JRadioButton("Favorito");        
         rdbtnFavorito.setBounds(20, 341, 109, 23);
         panel.add(rdbtnFavorito);
         rdbtnFavorito.setSelected(elem.isFavorito());
         
-        JComboBox CBnotas = new JComboBox();
+        CBnotas = new JComboBox();
         CBnotas.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}));
         CBnotas.setBounds(358, 78, 73, 20);
         panel.add(CBnotas);
         CBnotas.setSelectedIndex(elem.getNotaUsuario());
         
-        JComboBox CBestado = new JComboBox();
+        CBestado = new JComboBox();
         CBestado.setModel(new DefaultComboBoxModel(estadoVisualizacion.values()));
         CBestado.setBounds(358, 42, 99, 20);
         panel.add(CBestado);
         CBestado.setSelectedIndex(elem.getEstado().ordinal());
         
-        JButton btnGuardar = new JButton("Guardar");
-        btnGuardar.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		elem.setFavorito(rdbtnFavorito.isSelected());
-        		elem.setEstado((estadoVisualizacion)CBestado.getSelectedItem());
-        		elem.setNotaUsuario(CBnotas.getSelectedIndex());
-        		dispose();
-        	}
-        });
+        btnGuardar = new JButton("Guardar");
+
         btnGuardar.setBounds(194, 341, 89, 23);
         panel.add(btnGuardar);
         
-        JButton btnEliminar = new JButton("Eliminar");
-        btnEliminar.addActionListener(new ActionListener() 
-        {
-        	public void actionPerformed(ActionEvent e) 
-        	{
-        		lista.eliminarElemento(elemento.getId());
-        		
-        		JFrame ventanaAccion = new confirmarAccion(elemento.getId(), ventana,elemento.getTitulo(), "Eliminar", lista, panelLista);
-				
-				ventanaAccion.setVisible(true);
-        		
-        		dispose();
-        	}
+        btnEliminar = new JButton("Eliminar");
 
-        });
         btnEliminar.setBounds(412, 340, 89, 23);
         panel.add(btnEliminar);
+	}
+	
+	
+	public void controlador (ActionListener ctr) {
+		btnEliminar.setActionCommand("ELIMINAR " + elem.getId());
+		btnEliminar.addActionListener(ctr);
+		btnGuardar.setActionCommand("GUARDAR " + elem.getId() + " " + " " + " ");
+		btnGuardar.addActionListener(ctr);
+	}
+	
+	public void actualizarelemento() {
+		elem.setFavorito(rdbtnFavorito.isSelected());
+		elem.setEstado((estadoVisualizacion)CBestado.getSelectedItem());
+		elem.setNotaUsuario(CBnotas.getSelectedIndex());
 	}
 }

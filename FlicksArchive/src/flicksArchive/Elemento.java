@@ -16,6 +16,10 @@ public class Elemento {
 	private int notaUsuario;
 	private String URL_Imagen;
 	
+	private int contEtiqD = 0;
+	private Etiqueta[] etiquetasPre = new Etiqueta[3];
+	private int contEtiqUsu = 0;
+	private Etiqueta[] etiquetasUsuario= new Etiqueta[3];
 	
 	
 	
@@ -39,14 +43,6 @@ public class Elemento {
 		this.notaUsuario = nota;
 
 	}
-	public void editarElemento() {
-		//while(!botonGuardar){
-			
-		
-		
-		
-		//}
-	}
 	
 	//Devuelve los valores necesarios para almacenar el estado de un usuario con el elemento en la BD.
 	public String valores() {
@@ -58,11 +54,64 @@ public class Elemento {
 		} else {
 			sj.add("0");
 		}
+		
 		sj.add(""+notaUsuario);
 		return sj.toString();
 	}
 	
+	//Recibe el nombre de una etiqueta personalizada y la añade al elemento, si no estaba ya y si tiene menos de 3 etiquetas ya asociadas.
+	public void anadirEtiqueta(Filtro f, String n) {
+		if(this.contieneEtiqueta(n)) {
+			throw new IllegalArgumentException("ERROR: Has intentado añadir la etiqueta"+n.toUpperCase()+"pero ya estaba añadida.");
+		}
+		if(contEtiqUsu < 3) {
+			Etiqueta e = f.pedirEtiqueta(n);
+			e.inc();
+			etiquetasUsuario[contEtiqUsu] = e;
+			contEtiqUsu++;
+		}else {
+			throw new IllegalArgumentException("ERROR: intentado añadir más etiquetas de las posibles");
+		}
+	}
 	
+	
+	
+	/*
+	Solo se usa al importar la información de la base de datos, el usuario no tiene acceso a ella.
+	Recibe el nombre de una etiqueta por defecto y la añade al elemento, si no estaba ya y si tiene menos de 3 etiquetas ya asociadas
+	*/
+	public void anadirEtiquetaDefecto(Filtro f, String n) throws IllegalArgumentException{
+		if(this.contieneEtiqueta(n)) {
+			throw new IllegalArgumentException("Has intentado añadir la etiqueta"+n.toUpperCase()+"pero ya estaba añadida.");
+		}
+		if(contEtiqD < 3) {
+			Etiqueta e = f.pedirEtiquetaDef(n);
+			if(e==null) {
+				throw new IllegalArgumentException("ETIQUETA POR DEFECTO NO RECOGIDA");
+			}
+			e.inc();
+			etiquetasPre[contEtiqUsu] = e;
+			contEtiqD++;
+		}else {
+			throw new IllegalArgumentException("INTENTO DE AÑADIR MÁS ETIQUETAS DE LAS POSIBLES");
+		}
+	}
+	
+	//Devuelve true si el elemento contiene la etiqueta et.
+	public boolean contieneEtiqueta(String et) {
+		int c=0;
+		boolean encontrado =false;
+		while(c<contEtiqUsu && !encontrado) {
+			encontrado=(etiquetasUsuario[c].getNombre().equals(et));
+			c++;
+		}
+		c=0;
+		while(c<contEtiqD && !encontrado) {
+			encontrado=(etiquetasPre[c].getNombre().equals(et));
+			c++;
+		}
+		return encontrado;
+	}
 	
 	//Getters & Setters 
 	public String getPlataforma() {
@@ -129,10 +178,17 @@ public class Elemento {
 	public void setURL_Imagen(String uRL_Imagen) {
 		URL_Imagen = uRL_Imagen;
 	}
+	public int getContEtiqUsu() {
+		return contEtiqUsu;
+	}
+	public Etiqueta[] etiquetasUsuario(){
+		return etiquetasUsuario;
+	}
 	
 	/*
 	 * Funciones propias de objetos.
 	 */
+	
 	public String toString() {
 		
 		StringJoiner sj=new StringJoiner(",");

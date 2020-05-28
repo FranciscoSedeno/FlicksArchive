@@ -1,8 +1,5 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -12,27 +9,24 @@ import flicksArchive.Lista;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
 public class confirmarAccion extends JFrame {
 
+
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private int ID;
-	private String titulo;
+	private JButton btnSi;
+	private JButton btnNo;
 	private String accion;
-	
-	/**
-	 * Create the frame.
-	 */
-	public confirmarAccion(int ID, VentanaPrincipal ventanaprincipal, String titulo, String accion, Lista lista, JPanel panel) 
+	private int ID;
+
+	public confirmarAccion(int ID, VentanaPrincipal ventanaprincipal, String titulo, String accion, Lista lista) 
 	{
 		super(accion);
-		this.ID = ID;
-		this.titulo = titulo;
-		this.accion = accion;
 		
+		this.ID = ID;
+		this.accion = accion;		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 526, 272);
 		contentPane = new JPanel();
@@ -45,43 +39,22 @@ public class confirmarAccion extends JFrame {
 		texto.setBounds(-2, 39, 524, 106);
 		contentPane.add(texto);
 		
-		JButton btnSi = new JButton("Si");
-		btnSi.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent e) 
-			{
-				if(accion.equalsIgnoreCase("añadir"))
-				{
-					try 
-					{
-						lista.añadirElemento(lista.extraerElementoBD(ID));
-					} catch (SQLException e1) 
-					{
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}else
-				{
-					lista.eliminarElemento(ID);
-					
-					ventanaprincipal.refrescar(panel, lista);
-				}
-				dispose();
-			}
-		});
+		btnSi = new JButton("Si");
+		
 		btnSi.setBounds(110, 158, 97, 25);
 		contentPane.add(btnSi);
 		
-		JButton btnNo = new JButton("No");
-		btnNo.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				dispose();
-			}
-		});
+		btnNo = new JButton("No");
 		btnNo.setBounds(299, 158, 97, 25);
 		contentPane.add(btnNo);
 		this.setResizable(false);
+	}
+	
+	public void controlador (ActionListener ctr) {
+		btnSi.setActionCommand(accion + " SI " + ID);
+		btnSi.addActionListener(ctr);
+		btnNo.setActionCommand(accion + " NO " + ID);
+		btnNo.addActionListener(ctr);
+
 	}
 }
