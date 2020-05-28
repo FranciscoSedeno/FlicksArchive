@@ -13,7 +13,7 @@ public class Main {
 		// TODO Auto-generated method stub
 
 		
-		Lista prueba=new Lista("Fran");
+		Lista prueba=new Lista("Hielito");
 		List<Tupla> listaTuplas = prueba.buscarElementoNuevo("B");
 //		System.out.println(prueba.toString());
 		for (Tupla tupla : listaTuplas) 
