@@ -6,6 +6,8 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+import com.mysql.jdbc.UpdatableResultSet;
+
 import flicksArchive.Elemento;
 import flicksArchive.Lista;
 
@@ -51,14 +53,16 @@ public class ControladorAccion implements ActionListener {
 			} else if (comando[0].equals("Eliminar") && comando[1].equals("SI")) {
 				elem = lista.conseguirElemento(Integer.parseInt(comando[2]));
 				lista.eliminarElemento(elem.getId());
+				System.out.println("hola");
+				ventana.refrescar(lista);
+				ventana.panel.updateUI();
 				venGes.dispose();
 				
 				
 				
 			}
 			confAc.dispose();
-			System.out.println("HOLA");
-			ventana.refrescar(lista);
+			
 			
 		} catch (Exception exc) {
 			

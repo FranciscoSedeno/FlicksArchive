@@ -40,8 +40,7 @@ public class ControladorBotones implements ActionListener {
 			
 			
 		} catch (Exception exc) {
-			System.err.println(exc.getMessage());
-			//JOptionPane.showMessageDialog(ventana, exc.getMessage());
+			JOptionPane.showMessageDialog(ventana, exc.getMessage());
 		}
 		
 		
