@@ -71,13 +71,20 @@ public class Conexion {
 		st.close();
 		return sol;
 	}
-	public Elemento buscarElemento(int id) throws SQLException {
+	public Elemento buscarElemento(int id, Filtro f) throws SQLException {
 		Statement st = conn.createStatement();
 		Elemento elem=null;
-		ResultSet rs = st.executeQuery("SELECT Titulo,FechaPublicacion,FechaRetirada,Descripcion, URL_Imagen,ID, Nombre_Plataforma FROM Catalogo WHERE  ID="+id+";");
+		ResultSet rs = st.executeQuery("SELECT Titulo,FechaPublicacion,FechaRetirada,Descripcion, URL_Imagen,ID, Nombre_Plataforma,ED1, ED2, ED3 FROM Catalogo WHERE  ID="+id+";");
 		if(rs.next()) {
 			elem=new Elemento(rs.getString(1), rs.getDate(2), rs.getDate(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getString(7));
 		}
+		for(int i=8;i<11;i++) {
+			String aux= rs.getString(i);
+			if(aux!=null) {
+				elem.anadirEtiquetaDefecto(f,aux);
+			}
+		}
+		
 		st.close();
 		return elem;
 	}

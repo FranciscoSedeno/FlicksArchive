@@ -33,7 +33,7 @@ public class Lista {
 	
 	public Elemento extraerElementoBD(int id) throws SQLException
 	{
-		return conexion.buscarElemento(id);
+		return conexion.buscarElemento(id,filtro);
 	}
 	
 	public void actualizar() throws SQLException
