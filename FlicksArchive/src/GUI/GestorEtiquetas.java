@@ -45,7 +45,7 @@ public class GestorEtiquetas extends JFrame {
 	{
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
-		setBounds(100, 100, 438, 158);
+		setBounds(741, 461, 438, 158);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

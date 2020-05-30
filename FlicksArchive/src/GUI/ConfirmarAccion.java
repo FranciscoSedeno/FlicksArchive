@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import javax.swing.SwingConstants;
 
-public class confirmarAccion extends JFrame {
+public class ConfirmarAccion extends JFrame {
 
 
 	private static final long serialVersionUID = 1L;
@@ -21,13 +21,13 @@ public class confirmarAccion extends JFrame {
 	private String accion;
 	private int ID;
 
-	public confirmarAccion(int ID, VentanaPrincipal ventanaprincipal, String titulo, String accion) 
+	public ConfirmarAccion(int ID, VentanaPrincipal ventanaprincipal, String titulo, String accion) 
 	{
 		super(accion);
 		
 		this.ID = ID;
 		this.accion = accion;
-		setBounds(100, 100, 526, 272);
+		setBounds(697, 404, 526, 272);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

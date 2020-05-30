@@ -31,7 +31,7 @@ public class ControladorBotones implements ActionListener {
 				gestion.setVisible(true);
 			} else if (comando[0].equals("BUSCA")) {
 				
-				confirmarAccion confAc = new confirmarAccion(Integer.parseInt(comando[1]), ventana, comando[2], "Añadir");
+				ConfirmarAccion confAc = new ConfirmarAccion(Integer.parseInt(comando[1]), ventana, comando[2], "Añadir");
 				
 				ControladorAccion contAc = new ControladorAccion(lista, ventana,confAc);
 				confAc.controlador(contAc);

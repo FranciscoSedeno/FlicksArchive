@@ -32,7 +32,7 @@ public class ControladorGestion implements ActionListener {
 				
 			} else if (comando[0].equals("ELIMINAR")) {
 				
-				confirmarAccion ventanaAccion = new confirmarAccion(elem.getId(), ventana,elem.getTitulo(), "Eliminar");
+				ConfirmarAccion ventanaAccion = new ConfirmarAccion(elem.getId(), ventana,elem.getTitulo(), "Eliminar");
 				ControladorAccion contAcc = new ControladorAccion(lista, ventana, ventanaAccion, gestion);
 				ventanaAccion.controlador(contAcc);
 				

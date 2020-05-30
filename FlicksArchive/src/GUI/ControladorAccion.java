@@ -16,9 +16,9 @@ public class ControladorAccion implements ActionListener {
 	private Lista lista;
 	private VentanaPrincipal ventana;
 	private VentanaGestion venGes;
-	private confirmarAccion confAc;
+	private ConfirmarAccion confAc;
 	
-	public ControladorAccion(Lista l, VentanaPrincipal v, confirmarAccion ca, VentanaGestion vg) {
+	public ControladorAccion(Lista l, VentanaPrincipal v, ConfirmarAccion ca, VentanaGestion vg) {
 		// TODO Auto-generated constructor stub
 		lista = l;
 		ventana = v;
@@ -26,7 +26,7 @@ public class ControladorAccion implements ActionListener {
 		confAc = ca;
 	}
 	
-	public ControladorAccion(Lista l, VentanaPrincipal v, confirmarAccion ca) {
+	public ControladorAccion(Lista l, VentanaPrincipal v, ConfirmarAccion ca) {
 		// TODO Auto-generated constructor stub
 		lista = l;
 		ventana = v;
