@@ -65,7 +65,7 @@ public class Elemento {
 			throw new IllegalArgumentException("ERROR: Has intentado añadir la etiqueta"+n.toUpperCase()+"pero ya estaba añadida.");
 		}
 		if(contEtiqUsu < 3) {
-			Etiqueta e = f.pedirEtiqueta(n);
+			Etiqueta e = f.pedirEtiqueta(n.toUpperCase());
 			e.inc();
 			etiquetasUsuario[contEtiqUsu] = e;
 			contEtiqUsu++;
@@ -74,7 +74,19 @@ public class Elemento {
 		}
 	}
 	
-	
+	//Resetea etiquetas
+	public void resetearEtiquetas()
+	{
+		contEtiqUsu = 0;
+		for (int i = 0; i < etiquetasUsuario.length; i++) 
+		{
+			if(etiquetasUsuario[i] != null)
+			{
+				etiquetasUsuario[i].dec();
+				etiquetasUsuario[i] = null;
+			}
+		}
+	}
 	
 	/*
 	Solo se usa al importar la información de la base de datos, el usuario no tiene acceso a ella.
@@ -184,7 +196,9 @@ public class Elemento {
 	public Etiqueta[] etiquetasUsuario(){
 		return etiquetasUsuario;
 	}
-	
+	public Etiqueta[] etiquetasPredeterminadas(){
+		return etiquetasPre;
+	}
 	/*
 	 * Funciones propias de objetos.
 	 */

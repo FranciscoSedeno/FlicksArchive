@@ -35,6 +35,17 @@ public class Filtro {
 				sol = aux;
 			}
 		}
+		
+		Iterator<Etiqueta> it = etiquetasUsuario.iterator();
+		
+		while(it.hasNext() && sol==null) {
+			aux= it.next();
+			if(aux.getNombre().equalsIgnoreCase(n)) {
+				sol = aux;
+			}
+			
+		}
+		
 		if(sol == null) {
 			sol = new Etiqueta(n);
 			etiquetasUsuario.add(sol);
@@ -94,6 +105,20 @@ public class Filtro {
 	/*
 	 * Metodos para configurar el filtro
 	 */
+	
+	//Obtencion de las dos listas de etiquetas juntas
+	public List<Etiqueta> etiquetas()
+	{
+		List<Etiqueta> resultado = new ArrayList<Etiqueta>(etiquetasPredeterminadas);
+		resultado.addAll(etiquetasUsuario);
+		
+		return resultado;
+	}
+	
+	public List<Etiqueta> getEtiquetasUsuario() 
+	{
+		return etiquetasUsuario;
+	}
 	
 	//Selecciona si se esta buscando o no solo los elementos favoritos.
 	public void setFavoritoActivo(boolean favoritoActivo) {

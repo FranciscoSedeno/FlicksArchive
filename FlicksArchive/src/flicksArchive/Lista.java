@@ -38,7 +38,7 @@ public class Lista {
 	
 	public void actualizar() throws SQLException
 	{
-		conexion.actualizar(listaElementos.values());
+		conexion.actualizar(listaElementos.values(), filtro.getEtiquetasUsuario());
 	}
 	
 	//Devuelve la lista
@@ -50,6 +50,11 @@ public class Lista {
 	public Collection<Elemento> getListaFiltrada(){
 		return filtro.filtrado(listaElementos.values());
 	}
+	
+	public List<Etiqueta> etiquetas()
+	{
+		return filtro.etiquetas();
+	}
 	/*
 	 * Funciones para manipular la Lista de Elementos
 	 */
@@ -58,6 +63,7 @@ public class Lista {
 	}
 	
 	public void eliminarElemento(int id) {
+		listaElementos.get(id).resetearEtiquetas();
 		listaElementos.remove(id);
 	}
 
@@ -97,6 +103,11 @@ public class Lista {
 			sj.add(e.toString());
 		}
 		return sj.toString();
+	}
+	
+	public Filtro getFiltro()
+	{
+		return filtro;
 	}
 	
 	public Conexion getConexion(){

@@ -21,18 +21,18 @@ public class confirmarAccion extends JFrame {
 	private String accion;
 	private int ID;
 
-	public confirmarAccion(int ID, VentanaPrincipal ventanaprincipal, String titulo, String accion, Lista lista) 
+	public confirmarAccion(int ID, VentanaPrincipal ventanaprincipal, String titulo, String accion) 
 	{
 		super(accion);
 		
 		this.ID = ID;
-		this.accion = accion;		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.accion = accion;
 		setBounds(100, 100, 526, 272);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		JLabel texto = new JLabel("¿Estás seguro de que quieres " + accion.toLowerCase() + " " + titulo + "?");
 		texto.setHorizontalAlignment(SwingConstants.CENTER);

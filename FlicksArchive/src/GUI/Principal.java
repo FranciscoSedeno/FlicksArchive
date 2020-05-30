@@ -37,8 +37,8 @@ public class Principal {
 			
 			
 			
-			VentanaPrincipal window = new VentanaPrincipal(prueba);
-			
+			VentanaPrincipal window = new VentanaPrincipal();
+			window.refrescar(prueba);
 			//JScrollPane sp = new JScrollPane(window, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 			GridBagConstraints gbc_window = new GridBagConstraints();
 			gbc_window.insets = new Insets(0, 0, 5, 5);

@@ -88,26 +88,33 @@ public class Conexion {
 		st.close();
 		return elem;
 	}
-	public void actualizar(Collection<Elemento> l) throws SQLException {
+	public void actualizar(Collection<Elemento> l, Collection<Etiqueta> etiquetas) throws SQLException {
 		Statement st= conn.createStatement();
 		
 		st.executeUpdate("DELETE  FROM Usuario WHERE NombreUsuario LIKE '"+nombre+"' ;");
-		
+		st.executeUpdate("DELETE  FROM Etiqueta WHERE NombreUsuario LIKE '"+nombre+"' ;");
 		
 		for(Elemento e:l) {
 			st.execute("INSERT INTO Usuario (`NombreUsuario`, `ID`, `Estado`, `Favorito`, `Nota`) VALUES ( '"+nombre+"',"+e.valores()+" );");
 			int n = e.getContEtiqUsu();
 			Etiqueta[] et = e.etiquetasUsuario();
 			if(n>=1) {
-				st.execute("UPDATE Usuario` SET `EP1` = '"+et[1]+"' ;");
+				st.execute("UPDATE `Usuario` SET `EP1` = '"+et[0]+"' ;");
 			}
 			if(n>=2) {
-				st.execute("UPDATE Usuario` SET `EP2` = '"+et[2]+"' ;");
+				st.execute("UPDATE `Usuario` SET `EP2` = '"+et[1]+"' ;");
 			}
 			if(n>=3) {
-				st.execute("UPDATE Usuario` SET `EP3` = '"+et[3]+"' ;");
+				st.execute("UPDATE `Usuario` SET `EP3` = '"+et[2]+"' ;");
 			}
 		}
+		
+		for (Etiqueta etiqueta : etiquetas) 
+		{
+			//System.out.println("Etiqueta: " +  etiqueta.getNombre());
+			st.execute("INSERT INTO Etiqueta VALUES ( '"+etiqueta.getNombre()+"','"+nombre+"');");
+		}
+		
 		st.close();
 	}
 	

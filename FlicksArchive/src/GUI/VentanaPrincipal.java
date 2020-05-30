@@ -10,16 +10,21 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JTabbedPane;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
 import flicksArchive.Elemento;
+import flicksArchive.Etiqueta;
+import flicksArchive.Filtro;
 import flicksArchive.Lista;
 import flicksArchive.Tupla;
+import flicksArchive.Elemento.estadoVisualizacion;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -28,23 +33,29 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.FlowLayout;
-
+import javax.swing.JComboBox;
+import javax.swing.JRadioButton;
 
 public class VentanaPrincipal extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	public JTextField buscador;
-	public Lista botones;
 	private JButton aceptar;
 	private List<JButton> botonesLista = new ArrayList<JButton>();
 	private List<JButton> botonesBusca = new ArrayList<JButton>();
 	public JPanel panelBusqueda;
 	public JPanel panel;
 	public JTabbedPane tabbedPane;
+	private JTextField textFieldBuscar;
+	private JComboBox cbEtiqueta1;
+	private JComboBox cbEtiqueta2;
+	private JComboBox cbEtiqueta3;
+	private JComboBox cbEstado;
+	
+	private JRadioButton rdFavoritos;
 	
 	
-	public VentanaPrincipal(Lista prueba) {
-		botones = prueba;
+	public VentanaPrincipal() {
 		setBackground(SystemColor.textHighlight);
 		setName("FlicksArchive");
 		Rectangle rec = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
@@ -72,17 +83,69 @@ public class VentanaPrincipal extends JPanel {
 		
 		tabbedPane.addTab("Lista", null, Lista, null);
 		GridBagLayout gbl_Lista = new GridBagLayout();
-		gbl_Lista.columnWidths = new int[]{1766, 0};
-		gbl_Lista.rowHeights = new int[]{790, 0};
-		gbl_Lista.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_Lista.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_Lista.columnWidths = new int[]{1850, 0};
+		gbl_Lista.rowHeights = new int[]{77, 862, 0};
+		gbl_Lista.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_Lista.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		Lista.setLayout(gbl_Lista);
+		
+		JPanel panelFiltros = new JPanel();
+		GridBagConstraints gbc_panelFiltros = new GridBagConstraints();
+		gbc_panelFiltros.fill = GridBagConstraints.BOTH;
+		gbc_panelFiltros.insets = new Insets(0, 0, 5, 0);
+		gbc_panelFiltros.gridx = 0;
+		gbc_panelFiltros.gridy = 0;
+		Lista.add(panelFiltros, gbc_panelFiltros);
+		panelFiltros.setLayout(null);
+		
+		JLabel labelBuscar = new JLabel("Buscador");
+		labelBuscar.setBounds(0, 0, 56, 16);
+		panelFiltros.add(labelBuscar);
+		
+		textFieldBuscar = new JTextField();
+		textFieldBuscar.setBounds(0, 16, 436, 22);
+		panelFiltros.add(textFieldBuscar);
+		textFieldBuscar.setColumns(10);
+		
+		cbEstado = new JComboBox();
+		
+		cbEstado.setModel(new DefaultComboBoxModel(new String[] {"-", "PENDIENTE", "VIENDO", "FINALIZADO"}));
+		cbEstado.setBounds(1643, 16, 185, 22);
+		panelFiltros.add(cbEstado);
+		
+		JButton btBuscarLista = new JButton("Buscar");
+		btBuscarLista.setBounds(447, 15, 97, 25);
+		panelFiltros.add(btBuscarLista);
+		
+		JLabel lbEstados = new JLabel("Estado");
+		lbEstados.setBounds(1643, 0, 56, 16);
+		panelFiltros.add(lbEstados);
+		
+		cbEtiqueta1 = new JComboBox();
+		cbEtiqueta1.setBounds(790, 16, 146, 22);
+		panelFiltros.add(cbEtiqueta1);
+		
+		cbEtiqueta2 = new JComboBox();
+		cbEtiqueta2.setBounds(994, 16, 146, 22);
+		panelFiltros.add(cbEtiqueta2);
+		
+		cbEtiqueta3 = new JComboBox();
+		cbEtiqueta3.setBounds(1195, 16, 146, 22);
+		panelFiltros.add(cbEtiqueta3);
+		
+		JLabel lblEtiquetas = new JLabel("Etiquetas");
+		lblEtiquetas.setBounds(790, 0, 56, 16);
+		panelFiltros.add(lblEtiquetas);
+		
+		rdFavoritos = new JRadioButton("Favoritos");
+		rdFavoritos.setBounds(1447, 15, 127, 25);
+		panelFiltros.add(rdFavoritos);
 		
 		JPanel contentPane = new JPanel();
 		GridBagConstraints gbc_contentPane = new GridBagConstraints();
 		gbc_contentPane.fill = GridBagConstraints.BOTH;
 		gbc_contentPane.gridx = 0;
-		gbc_contentPane.gridy = 0;
+		gbc_contentPane.gridy = 1;
 		Lista.add(contentPane, gbc_contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{1766, 0};
@@ -106,7 +169,7 @@ public class VentanaPrincipal extends JPanel {
 		JPanel Añadir = new JPanel();
 		tabbedPane.addTab("A\u00F1adir", new ImageIcon(VentanaPrincipal.class.getResource("/img/anadir.png")), Añadir, null);
 		
-		refrescar(botones);
+		
 		GridBagLayout gbl_Añadir = new GridBagLayout();
 		gbl_Añadir.columnWidths = new int[]{1728, 0};
 		gbl_Añadir.rowHeights = new int[]{811, 0};
@@ -191,10 +254,14 @@ public class VentanaPrincipal extends JPanel {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void refrescar(Lista botones)
 	{
 		botonesLista.clear();
 		panel.removeAll();
+		cbEtiqueta1.setModel(new DefaultComboBoxModel<>(botones.etiquetas().toArray()));
+		cbEtiqueta2.setModel(new DefaultComboBoxModel<>(botones.etiquetas().toArray()));
+		cbEtiqueta3.setModel(new DefaultComboBoxModel<>(botones.etiquetas().toArray()));
 		ControladorBotones contBot = new ControladorBotones(botones, this);
 		for(Elemento elemento : botones.getListaActual())
 		{
@@ -208,7 +275,7 @@ public class VentanaPrincipal extends JPanel {
 			try 
 			{
 				Boton.setIcon(new ImageIcon(new URL(elemento.getURL_Imagen())));
-				Boton.setActionCommand("LISTA " + String.valueOf(elemento.getId()));
+				Boton.setActionCommand("LISTA@/%" + String.valueOf(elemento.getId()));
 				Boton.addActionListener(contBot);
 				
 				panel.add(Boton);
@@ -223,7 +290,7 @@ public class VentanaPrincipal extends JPanel {
 	
 	
 
-	public void mostrarbusqueda() throws MalformedURLException, SQLException {
+	public void mostrarbusqueda(Lista botones) throws MalformedURLException, SQLException {
 		botonesBusca.clear();
 		panelBusqueda.removeAll();
 		String buscado = buscador.getText();
@@ -241,12 +308,11 @@ public class VentanaPrincipal extends JPanel {
 				Boton.setPreferredSize(new Dimension(200, 300));
 				Boton.setBounds(10, 24, 200, 300);
 				Boton.setIcon(new ImageIcon(new URL(tupla.getUrl_img())));
-				Boton.setActionCommand("BUSCA " + String.valueOf(tupla.getId()));
+				Boton.setActionCommand("BUSCA@/%" + String.valueOf(tupla.getId()) + "@/%" + tupla.getTitulo());
 				Boton.addActionListener(contBot);
 				panelBusqueda.add(Boton);
 				panelBusqueda.updateUI();
 			}
 		}	
 	}
-	
 }

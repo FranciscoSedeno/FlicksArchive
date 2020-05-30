@@ -26,13 +26,13 @@ public class ControladorGestion implements ActionListener {
 		try {
 			if (comando[0].equals("GUARDAR")) {
 				
-				gestion.actualizarelemento();
+				gestion.actualizarelemento(lista.getFiltro());
 				
 				gestion.dispose();
 				
 			} else if (comando[0].equals("ELIMINAR")) {
 				
-				confirmarAccion ventanaAccion = new confirmarAccion(elem.getId(), ventana,elem.getTitulo(), "Eliminar", lista);
+				confirmarAccion ventanaAccion = new confirmarAccion(elem.getId(), ventana,elem.getTitulo(), "Eliminar");
 				ControladorAccion contAcc = new ControladorAccion(lista, ventana, ventanaAccion, gestion);
 				ventanaAccion.controlador(contAcc);
 				
@@ -40,7 +40,8 @@ public class ControladorGestion implements ActionListener {
 				
 			}
 		} catch (Exception exc) {
-			JOptionPane.showMessageDialog(gestion, e.getActionCommand());
+			JOptionPane.showMessageDialog(gestion, exc.getMessage());
+			System.out.println(exc.getMessage());
 		}
 		
 	}

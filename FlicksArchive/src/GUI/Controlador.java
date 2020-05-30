@@ -26,7 +26,7 @@ public class Controlador implements ActionListener, ChangeListener {
 		String comando = e.getActionCommand();
 		try {
 			if (comando.equals("ACEPTAR")) {
-				ventana.mostrarbusqueda();
+				ventana.mostrarbusqueda(lista);
 			}
 			
 		} catch (Exception exc){

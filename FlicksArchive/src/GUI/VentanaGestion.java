@@ -7,6 +7,8 @@ import javax.swing.border.EmptyBorder;
 
 import flicksArchive.Elemento;
 import flicksArchive.Elemento.estadoVisualizacion;
+import flicksArchive.Etiqueta;
+import flicksArchive.Filtro;
 import flicksArchive.Lista;
 
 import java.awt.Dimension;
@@ -22,6 +24,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingConstants;
+import javax.swing.JTextField;
 
 public class VentanaGestion extends JFrame {
 
@@ -35,10 +38,13 @@ public class VentanaGestion extends JFrame {
 	private JComboBox CBnotas;
 	@SuppressWarnings("rawtypes")
 	private JComboBox CBestado;	
-
+	private JTextField txtGenUsu1;
+	private JTextField textGenUsu2;
+	private JTextField textGenUsu3;
+	private JLabel lbGenero1, lbGenero2, lbGenero3;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public VentanaGestion(String titulo, Elemento elemento, Lista lista,VentanaPrincipal ventana) 
+	public VentanaGestion(String titulo, Elemento elemento,VentanaPrincipal ventana) 
 	{
 		super(titulo);
 		elem = elemento;
@@ -95,13 +101,13 @@ public class VentanaGestion extends JFrame {
         }
         
         JLabel lblDescripcin = new JLabel("Descripci\u00F3n");
-        lblDescripcin.setBounds(290, 158, 89, 14);
+        lblDescripcin.setBounds(290, 118, 89, 14);
         panel.add(lblDescripcin);
         
         JLabel desc = new JLabel(elem.getDescripcion());
         desc.setVerticalAlignment(SwingConstants.TOP);
         desc.setHorizontalAlignment(SwingConstants.LEFT);
-        desc.setBounds(290, 202, 343, 107);
+        desc.setBounds(290, 143, 343, 23);
         panel.add(desc);
         
         JLabel imagen = new JLabel();
@@ -145,6 +151,47 @@ public class VentanaGestion extends JFrame {
 
         btnEliminar.setBounds(412, 340, 89, 23);
         panel.add(btnEliminar);
+        
+        JLabel lblGnero = new JLabel("G\u00E9nero");
+        lblGnero.setBounds(290, 179, 56, 16);
+        panel.add(lblGnero);
+        
+        Etiqueta[] etiquetasPre = elemento.etiquetasPredeterminadas();
+        Etiqueta[] etiquetasUsu = elemento.etiquetasUsuario();
+        
+        lbGenero1 = new JLabel((etiquetasPre[0]!=null)?etiquetasPre[0].getNombre():"");
+        lbGenero1.setBounds(290, 208, 89, 16);
+        panel.add(lbGenero1);
+        
+        lbGenero2 = new JLabel((etiquetasPre[1]!=null)?etiquetasPre[1].getNombre():"");
+        lbGenero2.setBounds(412, 208, 89, 16);
+        panel.add(lbGenero2);
+        
+        lbGenero3 = new JLabel((etiquetasPre[2]!=null)?etiquetasPre[2].getNombre():"");
+        lbGenero3.setBounds(544, 208, 89, 16);
+        panel.add(lbGenero3);
+        
+        txtGenUsu1 = new JTextField();
+        txtGenUsu1.setText((etiquetasUsu[0] != null)?etiquetasUsu[0].getNombre():"");
+        txtGenUsu1.setBounds(290, 273, 89, 22);
+        panel.add(txtGenUsu1);
+        txtGenUsu1.setColumns(10);
+        
+        textGenUsu2 = new JTextField();
+        textGenUsu2.setText((etiquetasUsu[1] != null)?etiquetasUsu[1].getNombre():"");
+        textGenUsu2.setColumns(10);
+        textGenUsu2.setBounds(412, 274, 89, 22);
+        panel.add(textGenUsu2);
+        
+        textGenUsu3 = new JTextField();
+        textGenUsu3.setText((etiquetasUsu[2] != null)?etiquetasUsu[2].getNombre():"");
+        textGenUsu3.setColumns(10);
+        textGenUsu3.setBounds(544, 274, 89, 22);
+        panel.add(textGenUsu3);
+        
+        JLabel lbGeneroPerso = new JLabel("Etiquetas personalizadas");
+        lbGeneroPerso.setBounds(290, 237, 192, 16);
+        panel.add(lbGeneroPerso);
 	}
 	
 	
@@ -155,8 +202,20 @@ public class VentanaGestion extends JFrame {
 		btnGuardar.addActionListener(ctr);
 	}
 	
-	public void actualizarelemento() {
+	public void actualizarelemento(Filtro filtro) 
+	{
+		String aux;
 		elem.setFavorito(rdbtnFavorito.isSelected());
+		elem.resetearEtiquetas();
+		aux = txtGenUsu1.getText();
+		if(!aux.equals(""))
+			elem.anadirEtiqueta(filtro, aux);
+		aux = textGenUsu2.getText();
+		if(!aux.equals(""))
+			elem.anadirEtiqueta(filtro, aux);
+		aux = textGenUsu3.getText();
+		if(!aux.equals(""))
+			elem.anadirEtiqueta(filtro, aux);
 		elem.setEstado((estadoVisualizacion)CBestado.getSelectedItem());
 		elem.setNotaUsuario(CBnotas.getSelectedIndex());
 	}
