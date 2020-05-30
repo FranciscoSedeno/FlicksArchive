@@ -10,7 +10,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JTabbedPane;
@@ -47,14 +46,14 @@ public class VentanaPrincipal extends JPanel {
 	public JPanel panel;
 	public JTabbedPane tabbedPane;
 	private JTextField textFieldBuscar;
-	private JComboBox cbEtiqueta1;
-	private JComboBox cbEtiqueta2;
-	private JComboBox cbEtiqueta3;
-	private JComboBox cbEstado;
+	@SuppressWarnings("rawtypes")
+	private JComboBox cbEtiqueta1, cbEtiqueta2, cbEtiqueta3, cbEstado;
+	private JButton btBuscarLista;
 	
 	private JRadioButton rdFavoritos;
 	
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public VentanaPrincipal() {
 		setBackground(SystemColor.textHighlight);
 		setName("FlicksArchive");
@@ -113,7 +112,7 @@ public class VentanaPrincipal extends JPanel {
 		cbEstado.setBounds(1643, 16, 185, 22);
 		panelFiltros.add(cbEstado);
 		
-		JButton btBuscarLista = new JButton("Buscar");
+		btBuscarLista = new JButton("Buscar");
 		btBuscarLista.setBounds(447, 15, 97, 25);
 		panelFiltros.add(btBuscarLista);
 		
@@ -244,13 +243,46 @@ public class VentanaPrincipal extends JPanel {
 		buscador.setColumns(10);
 	}
 	
+	public void estadoFiltrado(Filtro fil) {
+		List<String> listaEtiquetas = new ArrayList<String>();
+		int indice = cbEstado.getSelectedIndex();
+		if (indice == 0) {
+			fil.setEstadoBuscado(null);
+		} else {
+			fil.setEstadoBuscado(estadoVisualizacion.values()[indice-1]);
+		}
+		fil.setFavoritoActivo(rdFavoritos.isSelected());
+		
+		if (cbEtiqueta1.getSelectedIndex() != 0) {
+			listaEtiquetas.add(((Etiqueta)cbEtiqueta1.getSelectedItem()).getNombre());
+		} 
+		if (cbEtiqueta2.getSelectedIndex() != 0) {
+			listaEtiquetas.add(((Etiqueta)cbEtiqueta2.getSelectedItem()).getNombre());
+		}
+		if (cbEtiqueta3.getSelectedIndex() != 0) {
+			listaEtiquetas.add(((Etiqueta)cbEtiqueta3.getSelectedItem()).getNombre());
+		}
+		fil.setEtiquetas(listaEtiquetas);
+		
+		if (textFieldBuscar.getText().equals("")) {
+			fil.setFragmentoTitulo(null);
+		} else {
+			fil.setFragmentoTitulo(textFieldBuscar.getText());
+		}
+		
+	}
 	
 	public void controlador (Controlador ctr) {
 		aceptar.addActionListener(ctr);
 		aceptar.setActionCommand("ACEPTAR");
 		buscador.addActionListener(ctr);
 		buscador.setActionCommand("ACEPTAR");
-		tabbedPane.addChangeListener(ctr);		
+		tabbedPane.addChangeListener(ctr);	
+		textFieldBuscar.addActionListener(ctr);
+		btBuscarLista.addActionListener(ctr);
+		textFieldBuscar.setActionCommand("FILTRAR");
+		btBuscarLista.setActionCommand("FILTRAR");
+		
 		
 	}
 	
@@ -259,11 +291,9 @@ public class VentanaPrincipal extends JPanel {
 	{
 		botonesLista.clear();
 		panel.removeAll();
-		cbEtiqueta1.setModel(new DefaultComboBoxModel<>(botones.etiquetas().toArray()));
-		cbEtiqueta2.setModel(new DefaultComboBoxModel<>(botones.etiquetas().toArray()));
-		cbEtiqueta3.setModel(new DefaultComboBoxModel<>(botones.etiquetas().toArray()));
+		
 		ControladorBotones contBot = new ControladorBotones(botones, this);
-		for(Elemento elemento : botones.getListaActual())
+		for(Elemento elemento : botones.getListaFiltrada())
 		{
 			JButton Boton = new JButton("");
 			Boton.setForeground(new Color(0, 255, 51));
@@ -285,6 +315,12 @@ public class VentanaPrincipal extends JPanel {
 				e1.printStackTrace();
 			}
 		}
+
+		
+		cbEtiqueta1.setModel(new DefaultComboBoxModel<>(botones.etiquetas().toArray()));
+		cbEtiqueta2.setModel(new DefaultComboBoxModel<>(botones.etiquetas().toArray()));
+		cbEtiqueta3.setModel(new DefaultComboBoxModel<>(botones.etiquetas().toArray()));
+		panel.updateUI();
 
 	}
 	

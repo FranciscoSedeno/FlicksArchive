@@ -53,7 +53,10 @@ public class Lista {
 	
 	public List<Etiqueta> etiquetas()
 	{
-		return filtro.etiquetas();
+		List<Etiqueta> etiq = filtro.etiquetas();
+		etiq.add(0, new Etiqueta("-"));
+		
+		return etiq;
 	}
 	/*
 	 * Funciones para manipular la Lista de Elementos

@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import flicksArchive.Filtro;
 import flicksArchive.Lista;
 
 public class Controlador implements ActionListener, ChangeListener {
@@ -27,6 +28,11 @@ public class Controlador implements ActionListener, ChangeListener {
 		try {
 			if (comando.equals("ACEPTAR")) {
 				ventana.mostrarbusqueda(lista);
+			} else if (comando.equals("FILTRAR")) {
+				Filtro filtro = lista.getFiltro();
+				ventana.estadoFiltrado(filtro);
+				ventana.refrescar(lista);
+				
 			}
 			
 		} catch (Exception exc){

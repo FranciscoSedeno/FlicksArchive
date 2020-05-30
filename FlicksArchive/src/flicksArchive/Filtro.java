@@ -130,6 +130,10 @@ public class Filtro {
 		this.estadoBuscado = estadoBuscado;
 	}
 	
+	public void setFragmentoTitulo(String fragmentoTitulo) {
+		this.fragmentoTitulo = fragmentoTitulo.toUpperCase();
+	}
+	
 	//Borra las etiquetas aplicadas y añade aquellas etiquetas de filtro cuyo nombre coincida con algun string de etiquetas
 	public void setEtiquetas(List<String> etiquetas) {
 		
