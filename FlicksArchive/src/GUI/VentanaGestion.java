@@ -42,6 +42,7 @@ public class VentanaGestion extends JFrame {
 	private JTextField textGenUsu2;
 	private JTextField textGenUsu3;
 	private JLabel lbGenero1, lbGenero2, lbGenero3;
+	private JComboBox cbProgreso;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public VentanaGestion(String titulo, Elemento elemento,VentanaPrincipal ventana) 
@@ -192,6 +193,22 @@ public class VentanaGestion extends JFrame {
         JLabel lbGeneroPerso = new JLabel("Etiquetas personalizadas");
         lbGeneroPerso.setBounds(290, 237, 192, 16);
         panel.add(lbGeneroPerso);
+        
+        JLabel lblN = new JLabel("Progreso");
+        lblN.setBounds(491, 46, 56, 16);
+        panel.add(lblN);
+        
+        String numCapitulos[] = new String[elemento.getNumCapitulos() + 1];
+        for (int i = 0; i < numCapitulos.length; i++) 
+        {
+        	numCapitulos[i] = "" + i;
+		}
+        
+        cbProgreso = new JComboBox();
+        cbProgreso.setModel(new DefaultComboBoxModel(numCapitulos));
+        cbProgreso.setSelectedIndex(elemento.getProgreso());
+        cbProgreso.setBounds(555, 45, 78, 22);
+        panel.add(cbProgreso);
 	}
 	
 	
@@ -206,6 +223,7 @@ public class VentanaGestion extends JFrame {
 	{
 		String aux;
 		elem.setFavorito(rdbtnFavorito.isSelected());
+		elem.setProgreso(cbProgreso.getSelectedIndex());
 		elem.resetearEtiquetas();
 		aux = txtGenUsu1.getText();
 		if(!aux.equals(""))

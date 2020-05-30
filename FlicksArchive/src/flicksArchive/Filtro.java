@@ -102,6 +102,17 @@ public class Filtro {
 		etiquetasFiltradas.remove(e);
 	}
 	
+	public List<Etiqueta> etiquetasSinUso()
+	{
+		List<Etiqueta> listaResultado = new LinkedList<>();
+		for (Etiqueta etiqueta : etiquetasUsuario) 
+		{
+			if(etiqueta.getContador() == 0)
+				listaResultado.add(etiqueta);
+		}
+		return listaResultado;
+	}
+	
 	/*
 	 * Metodos para configurar el filtro
 	 */
@@ -131,7 +142,10 @@ public class Filtro {
 	}
 	
 	public void setFragmentoTitulo(String fragmentoTitulo) {
-		this.fragmentoTitulo = fragmentoTitulo.toUpperCase();
+		if(fragmentoTitulo != null)
+			this.fragmentoTitulo = fragmentoTitulo.toUpperCase();
+		else
+			this.fragmentoTitulo = null;
 	}
 	
 	//Borra las etiquetas aplicadas y añade aquellas etiquetas de filtro cuyo nombre coincida con algun string de etiquetas
@@ -193,7 +207,7 @@ public class Filtro {
 				sol = filtroIndividual(sol, aux);
 			}
 			if(fragmentoTitulo!=null) {
-				filtroTitulo(sol);
+				sol = filtroTitulo(sol);
 			}
 		}else {
 			sol=new ArrayList<Elemento>();
@@ -261,7 +275,6 @@ public class Filtro {
 		
 		while(it.hasNext()) {
 			elem=it.next();
-			
 			if(elem.getTitulo().toUpperCase().contains(fragmentoTitulo)) {
 				sol.add(elem);
 			}

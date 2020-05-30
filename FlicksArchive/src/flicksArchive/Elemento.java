@@ -15,6 +15,8 @@ public class Elemento {
 	private estadoVisualizacion estado;
 	private int notaUsuario;
 	private String URL_Imagen;
+	private int numCapitulos;
+	private int progreso = 0;
 	
 	private int contEtiqD = 0;
 	private Etiqueta[] etiquetasPre = new Etiqueta[3];
@@ -23,7 +25,7 @@ public class Elemento {
 	
 	
 	
-	public Elemento(String titulo, Date fechaPublicacion, Date fechaRetirada, String descripcion, String img, int id, String plataforma) {
+	public Elemento(String titulo, Date fechaPublicacion, Date fechaRetirada, String descripcion, String img, int id, String plataforma, int num) {
 		super();
 		this.titulo = titulo;
 		this.plataforma = plataforma;
@@ -35,12 +37,14 @@ public class Elemento {
 		this.notaUsuario = 0;
 		URL_Imagen = img;
 		this.id = id;
+		numCapitulos = num;
 	}
-	public Elemento(String titulo, Date fechaPublicacion, Date fechaRetirada, String descripcion, String img, int id,String plataforma,int  estado,boolean favorito,int nota) {
-		this(titulo, fechaPublicacion, fechaRetirada, descripcion, img, id,plataforma);
+	public Elemento(String titulo, Date fechaPublicacion, Date fechaRetirada, String descripcion, String img, int id,String plataforma, int num, int  estado,boolean favorito,int nota, int actual) {
+		this(titulo, fechaPublicacion, fechaRetirada, descripcion, img, id,plataforma, num);
 		this.favorito = favorito;
 		this.estado = estadoVisualizacion.values()[estado];
 		this.notaUsuario = nota;
+		progreso = actual;
 
 	}
 	
@@ -56,6 +60,7 @@ public class Elemento {
 		}
 		
 		sj.add(""+notaUsuario);
+		sj.add("" + progreso);
 		return sj.toString();
 	}
 	
@@ -198,6 +203,15 @@ public class Elemento {
 	}
 	public Etiqueta[] etiquetasPredeterminadas(){
 		return etiquetasPre;
+	}
+	public int getNumCapitulos() {
+		return numCapitulos;
+	}
+	public int getProgreso() {
+		return progreso;
+	}
+	public void setProgreso(int progreso) {
+		this.progreso = progreso;
 	}
 	/*
 	 * Funciones propias de objetos.

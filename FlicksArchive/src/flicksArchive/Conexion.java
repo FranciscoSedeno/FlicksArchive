@@ -36,10 +36,10 @@ public class Conexion {
 			filtro.pedirEtiqueta(rs.getString(1));
 		}
 		
-		rs= st.executeQuery("SELECT Titulo,FechaPublicacion,FechaRetirada,Descripcion,URL_Imagen,c.ID, Estado, Favorito, Nota,Nombre_Plataforma, EP1, EP2, EP3, ED1, ED2, ED3 FROM Usuario u JOIN Catalogo c on (c.ID=u.ID) WHERE u.NombreUsuario LIKE '"+nombre+"' ;");
+		rs= st.executeQuery("SELECT Titulo,FechaPublicacion,FechaRetirada,Descripcion,URL_Imagen,c.ID, Estado, Favorito, Nota,Nombre_Plataforma, EP1, EP2, EP3, ED1, ED2, ED3, TOTAL, PROGRESO FROM Usuario u JOIN Catalogo c on (c.ID=u.ID) WHERE u.NombreUsuario LIKE '"+nombre+"' ;");
 		
 		while(rs.next()) {
-			Elemento e = new Elemento(rs.getString(1),rs.getDate(2),rs.getDate(3),rs.getString(4),rs.getString(5),rs.getInt(6),rs.getString(10),rs.getInt(7),rs.getBoolean(8),rs.getInt(9));
+			Elemento e = new Elemento(rs.getString(1),rs.getDate(2),rs.getDate(3),rs.getString(4),rs.getString(5),rs.getInt(6),rs.getString(10),rs.getInt(17),rs.getInt(7),rs.getBoolean(8),rs.getInt(9), rs.getInt(18));
 			lista.put(rs.getInt(6),e);
 			
 			for(int i = 11;i<17 ;i++) {
@@ -74,9 +74,9 @@ public class Conexion {
 	public Elemento buscarElemento(int id, Filtro f) throws SQLException {
 		Statement st = conn.createStatement();
 		Elemento elem=null;
-		ResultSet rs = st.executeQuery("SELECT Titulo,FechaPublicacion,FechaRetirada,Descripcion, URL_Imagen,ID, Nombre_Plataforma,ED1, ED2, ED3 FROM Catalogo WHERE  ID="+id+";");
+		ResultSet rs = st.executeQuery("SELECT Titulo,FechaPublicacion,FechaRetirada,Descripcion, URL_Imagen,ID, Nombre_Plataforma,ED1, ED2, ED3, TOTAL FROM Catalogo WHERE  ID="+id+";");
 		if(rs.next()) {
-			elem=new Elemento(rs.getString(1), rs.getDate(2), rs.getDate(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getString(7));
+			elem=new Elemento(rs.getString(1), rs.getDate(2), rs.getDate(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getString(7),rs.getInt(8));
 		}
 		for(int i=8;i<11;i++) {
 			String aux= rs.getString(i);
@@ -95,7 +95,7 @@ public class Conexion {
 		st.executeUpdate("DELETE  FROM Etiqueta WHERE NombreUsuario LIKE '"+nombre+"' ;");
 		
 		for(Elemento e:l) {
-			st.execute("INSERT INTO Usuario (`NombreUsuario`, `ID`, `Estado`, `Favorito`, `Nota`) VALUES ( '"+nombre+"',"+e.valores()+" );");
+			st.execute("INSERT INTO Usuario (`NombreUsuario`, `ID`, `Estado`, `Favorito`, `Nota`, `Progreso`) VALUES ( '"+nombre+"',"+e.valores()+" );");
 			int n = e.getContEtiqUsu();
 			Etiqueta[] et = e.etiquetasUsuario();
 			if(n>=1) {

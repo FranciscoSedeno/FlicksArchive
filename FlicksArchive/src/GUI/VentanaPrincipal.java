@@ -51,6 +51,8 @@ public class VentanaPrincipal extends JPanel {
 	private JButton btBuscarLista;
 	
 	private JRadioButton rdFavoritos;
+	private JButton btLimpiar;
+	private JButton btEliminarEtiqueta;
 	
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -102,43 +104,51 @@ public class VentanaPrincipal extends JPanel {
 		panelFiltros.add(labelBuscar);
 		
 		textFieldBuscar = new JTextField();
-		textFieldBuscar.setBounds(0, 16, 436, 22);
+		textFieldBuscar.setBounds(0, 16, 304, 22);
 		panelFiltros.add(textFieldBuscar);
 		textFieldBuscar.setColumns(10);
 		
 		cbEstado = new JComboBox();
 		
 		cbEstado.setModel(new DefaultComboBoxModel(new String[] {"-", "PENDIENTE", "VIENDO", "FINALIZADO"}));
-		cbEstado.setBounds(1643, 16, 185, 22);
+		cbEstado.setBounds(366, 16, 185, 22);
 		panelFiltros.add(cbEstado);
 		
-		btBuscarLista = new JButton("Buscar");
-		btBuscarLista.setBounds(447, 15, 97, 25);
+		btBuscarLista = new JButton("Filtrar");
+		btBuscarLista.setBounds(1391, 17, 97, 25);
 		panelFiltros.add(btBuscarLista);
 		
 		JLabel lbEstados = new JLabel("Estado");
-		lbEstados.setBounds(1643, 0, 56, 16);
+		lbEstados.setBounds(366, 0, 56, 16);
 		panelFiltros.add(lbEstados);
 		
 		cbEtiqueta1 = new JComboBox();
-		cbEtiqueta1.setBounds(790, 16, 146, 22);
+		cbEtiqueta1.setBounds(619, 16, 146, 22);
 		panelFiltros.add(cbEtiqueta1);
 		
 		cbEtiqueta2 = new JComboBox();
-		cbEtiqueta2.setBounds(994, 16, 146, 22);
+		cbEtiqueta2.setBounds(823, 16, 146, 22);
 		panelFiltros.add(cbEtiqueta2);
 		
 		cbEtiqueta3 = new JComboBox();
-		cbEtiqueta3.setBounds(1195, 16, 146, 22);
+		cbEtiqueta3.setBounds(1024, 16, 146, 22);
 		panelFiltros.add(cbEtiqueta3);
 		
 		JLabel lblEtiquetas = new JLabel("Etiquetas");
-		lblEtiquetas.setBounds(790, 0, 56, 16);
+		lblEtiquetas.setBounds(619, 0, 56, 16);
 		panelFiltros.add(lblEtiquetas);
 		
 		rdFavoritos = new JRadioButton("Favoritos");
-		rdFavoritos.setBounds(1447, 15, 127, 25);
+		rdFavoritos.setBounds(1241, 15, 127, 25);
 		panelFiltros.add(rdFavoritos);
+		
+		btLimpiar = new JButton("Limpiar");
+		btLimpiar.setBounds(1541, 17, 97, 25);
+		panelFiltros.add(btLimpiar);
+		
+		btEliminarEtiqueta = new JButton("Eliminar Etiqueta");
+		btEliminarEtiqueta.setBounds(1692, 15, 146, 25);
+		panelFiltros.add(btEliminarEtiqueta);
 		
 		JPanel contentPane = new JPanel();
 		GridBagConstraints gbc_contentPane = new GridBagConstraints();
@@ -243,6 +253,24 @@ public class VentanaPrincipal extends JPanel {
 		buscador.setColumns(10);
 	}
 	
+	public void controlador (Controlador ctr) {
+		aceptar.addActionListener(ctr);
+		aceptar.setActionCommand("ACEPTAR");
+		buscador.addActionListener(ctr);
+		buscador.setActionCommand("ACEPTAR");
+		tabbedPane.addChangeListener(ctr);	
+		textFieldBuscar.addActionListener(ctr);
+		btBuscarLista.addActionListener(ctr);
+		textFieldBuscar.setActionCommand("FILTRAR");
+		btBuscarLista.setActionCommand("FILTRAR");
+		btLimpiar.addActionListener(ctr);
+		btLimpiar.setActionCommand("LIMPIAR");
+		btEliminarEtiqueta.addActionListener(ctr);
+		btEliminarEtiqueta.setActionCommand("ELIMINAR ETIQUETAS");
+		
+		
+	}
+	
 	public void estadoFiltrado(Filtro fil) {
 		List<String> listaEtiquetas = new ArrayList<String>();
 		int indice = cbEstado.getSelectedIndex();
@@ -272,18 +300,16 @@ public class VentanaPrincipal extends JPanel {
 		
 	}
 	
-	public void controlador (Controlador ctr) {
-		aceptar.addActionListener(ctr);
-		aceptar.setActionCommand("ACEPTAR");
-		buscador.addActionListener(ctr);
-		buscador.setActionCommand("ACEPTAR");
-		tabbedPane.addChangeListener(ctr);	
-		textFieldBuscar.addActionListener(ctr);
-		btBuscarLista.addActionListener(ctr);
-		textFieldBuscar.setActionCommand("FILTRAR");
-		btBuscarLista.setActionCommand("FILTRAR");
-		
-		
+	@SuppressWarnings("unchecked")
+	public void setModelComboBox(Lista botones)
+	{
+		cbEtiqueta1.setModel(new DefaultComboBoxModel<>(botones.etiquetas().toArray()));
+		cbEtiqueta2.setModel(new DefaultComboBoxModel<>(botones.etiquetas().toArray()));
+		cbEtiqueta3.setModel(new DefaultComboBoxModel<>(botones.etiquetas().toArray()));
+		cbEstado.setSelectedIndex(0);
+		rdFavoritos.setSelected(false);
+		textFieldBuscar.setText("");
+		updateUI();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -291,7 +317,6 @@ public class VentanaPrincipal extends JPanel {
 	{
 		botonesLista.clear();
 		panel.removeAll();
-		
 		ControladorBotones contBot = new ControladorBotones(botones, this);
 		for(Elemento elemento : botones.getListaFiltrada())
 		{
@@ -317,9 +342,6 @@ public class VentanaPrincipal extends JPanel {
 		}
 
 		
-		cbEtiqueta1.setModel(new DefaultComboBoxModel<>(botones.etiquetas().toArray()));
-		cbEtiqueta2.setModel(new DefaultComboBoxModel<>(botones.etiquetas().toArray()));
-		cbEtiqueta3.setModel(new DefaultComboBoxModel<>(botones.etiquetas().toArray()));
 		panel.updateUI();
 
 	}

@@ -2,11 +2,14 @@ package GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import flicksArchive.Etiqueta;
 import flicksArchive.Filtro;
 import flicksArchive.Lista;
 
@@ -32,10 +35,22 @@ public class Controlador implements ActionListener, ChangeListener {
 				Filtro filtro = lista.getFiltro();
 				ventana.estadoFiltrado(filtro);
 				ventana.refrescar(lista);
-				
+			} else if (comando.equals("LIMPIAR"))
+			{
+				ventana.setModelComboBox(lista);
+				ventana.estadoFiltrado(lista.getFiltro());
+				ventana.refrescar(lista);
+			} else if (comando.equals("ELIMINAR ETIQUETAS"))
+			{
+				//TODO Rellenar aqui la ventana emergente
+				GestorEtiquetas gestorEtiquetas = new GestorEtiquetas();
+				ControladorEtiquetas contEtiquetas = new ControladorEtiquetas(gestorEtiquetas, lista, ventana);
+				gestorEtiquetas.setListaEtiquetas(lista.getFiltro().etiquetasSinUso());
+				gestorEtiquetas.controlador(contEtiquetas);
+				gestorEtiquetas.setVisible(true);
 			}
 			
-		} catch (Exception exc){
+		}catch (Exception exc){
 			JOptionPane.showMessageDialog(ventana, exc.getMessage());
 		}
 		
@@ -48,6 +63,7 @@ public class Controlador implements ActionListener, ChangeListener {
 			if(ventana.tabbedPane.getSelectedIndex() == 0)
 			{
 				ventana.refrescar(lista);
+				ventana.setModelComboBox(lista);
 				ventana.buscador.setText("");
 		    	ventana.panelBusqueda.removeAll();
 			}
