@@ -45,7 +45,7 @@ public class VentanaGestion extends JFrame {
 		setPreferredSize(new Dimension(800, 600));
 		this.setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 684, 433);
+		setBounds(560, 240, 684, 433);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

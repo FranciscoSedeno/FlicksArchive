@@ -48,7 +48,7 @@ public class VentanaPrincipal extends JPanel {
 		setBackground(SystemColor.textHighlight);
 		setName("FlicksArchive");
 		Rectangle rec = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
-		setPreferredSize(new Dimension(rec.width-100, rec.height-100));
+		setPreferredSize(new Dimension(rec.width, rec.height));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 1792, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 918, 0, 0};
