@@ -175,13 +175,13 @@ public class Filtro {
 	 * Metodos para filtrar una coleccion de elementos.
 	 */
 	
-	public Collection<Elemento> filtrado(Collection<Elemento> listaElementos){
+	public List<Elemento> filtrado(Collection<Elemento> listaElementos){
 		
 		
 		Etiqueta aux;
 		boolean noElementos = false;
 		Iterator<Etiqueta> itEtFiltro = etiquetasFiltradas.iterator();
-		Collection<Elemento> sol = listaElementos;			
+		List<Elemento> sol = new LinkedList<Elemento>(listaElementos);			
 		
 		
 		noElementos = !(etiquetasFiltradas.size() < 3);
@@ -216,10 +216,10 @@ public class Filtro {
 	}
 	
 
-	private Collection<Elemento> filtroIndividual (Collection<Elemento> lista, Etiqueta e){
+	private List<Elemento> filtroIndividual (Collection<Elemento> lista, Etiqueta e){
 		Iterator<Elemento> it = lista.iterator();
 		Elemento elem;
-		Collection<Elemento> sol = new LinkedList<>();
+		List<Elemento> sol = new LinkedList<>();
 	
 		
 		while(it.hasNext()) {
@@ -233,10 +233,10 @@ public class Filtro {
 		}
 		return sol;
 	}
-	private Collection<Elemento> filtroFavorito (Collection<Elemento> lista){
+	private List<Elemento> filtroFavorito (Collection<Elemento> lista){
 		Iterator<Elemento> it = lista.iterator();
 		Elemento elem;
-		Collection<Elemento> sol = new LinkedList<>();
+		List<Elemento> sol = new LinkedList<>();
 	
 		
 		while(it.hasNext()) {
@@ -250,10 +250,10 @@ public class Filtro {
 		}
 		return sol;
 	}
-	private Collection<Elemento> filtroEstado (Collection<Elemento> lista,estadoVisualizacion estado){
+	private List<Elemento> filtroEstado (Collection<Elemento> lista,estadoVisualizacion estado){
 		Iterator<Elemento> it = lista.iterator();
 		Elemento elem;
-		Collection<Elemento> sol = new LinkedList<>();
+		List<Elemento> sol = new LinkedList<>();
 	
 		
 		while(it.hasNext()) {
@@ -267,10 +267,10 @@ public class Filtro {
 		}
 		return sol;
 	}
-	private Collection<Elemento> filtroTitulo (Collection<Elemento> lista){
+	private List<Elemento> filtroTitulo (Collection<Elemento> lista){
 		Iterator<Elemento> it = lista.iterator();
 		Elemento elem;
-		Collection<Elemento> sol = new LinkedList<>();
+		List<Elemento> sol = new LinkedList<>();
 	
 		
 		while(it.hasNext()) {

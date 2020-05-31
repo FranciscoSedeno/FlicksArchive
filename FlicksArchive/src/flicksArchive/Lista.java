@@ -9,7 +9,7 @@ public class Lista {
 	private Map<Integer,Elemento> listaElementos;
 	private Set<String> listaPlataformas;
 	private Conexion conexion;
-	//private Ordenacion ordenacion;
+	private Comparator<Elemento> ordenacion= Comparator.naturalOrder();
 	private Filtro filtro=new Filtro();
 	//private List<Notificaciones> listaNotificaciones;
 	
@@ -48,7 +48,9 @@ public class Lista {
 	}
 	//Devuelve la lista de acuerdo a los filtros
 	public Collection<Elemento> getListaFiltrada(){
-		return filtro.filtrado(listaElementos.values());
+		List<Elemento> l=filtro.filtrado(listaElementos.values());
+		Collections.sort(l, ordenacion);
+		return l;
 	}
 	
 	public List<Etiqueta> etiquetas()
@@ -79,9 +81,15 @@ public class Lista {
         return listaElementos.containsKey(id);
     }
 	
-	
-	
-	
+	public void ordenaA_Z() {
+		ordenacion= Comparator.naturalOrder();
+	}
+	public void ordenaZ_A() {
+		ordenacion=Comparator.reverseOrder();
+	}
+	public void ordenaNota() {
+		ordenacion= new ComparatorNotas();
+	}
 	
 	/*
 	 * Funciones para modificar el conjunto de plataformas

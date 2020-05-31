@@ -76,7 +76,7 @@ public class Conexion {
 		Elemento elem=null;
 		ResultSet rs = st.executeQuery("SELECT Titulo,FechaPublicacion,FechaRetirada,Descripcion, URL_Imagen,ID, Nombre_Plataforma,ED1, ED2, ED3, TOTAL FROM Catalogo WHERE  ID="+id+";");
 		if(rs.next()) {
-			elem=new Elemento(rs.getString(1), rs.getDate(2), rs.getDate(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getString(7),rs.getInt(8));
+			elem=new Elemento(rs.getString(1), rs.getDate(2), rs.getDate(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getString(7),rs.getInt(11));
 		}
 		for(int i=8;i<11;i++) {
 			String aux= rs.getString(i);
@@ -90,22 +90,22 @@ public class Conexion {
 	}
 	public void actualizar(Collection<Elemento> l, Collection<Etiqueta> etiquetas) throws SQLException {
 		Statement st= conn.createStatement();
-		
-		st.executeUpdate("DELETE  FROM Usuario WHERE NombreUsuario LIKE '"+nombre+"' ;");
+
 		st.executeUpdate("DELETE  FROM Etiqueta WHERE NombreUsuario LIKE '"+nombre+"' ;");
+		st.executeUpdate("DELETE  FROM Usuario WHERE NombreUsuario LIKE '"+nombre+"' ;");
 		
 		for(Elemento e:l) {
 			st.execute("INSERT INTO Usuario (`NombreUsuario`, `ID`, `Estado`, `Favorito`, `Nota`, `Progreso`) VALUES ( '"+nombre+"',"+e.valores()+" );");
 			int n = e.getContEtiqUsu();
 			Etiqueta[] et = e.etiquetasUsuario();
 			if(n>=1) {
-				st.execute("UPDATE `Usuario` SET `EP1` = '"+et[0]+"' ;");
+				st.execute("UPDATE `Usuario` SET `EP1` = '"+et[0]+"' WHERE ID ="+e.getId()+" AND UPPER(NombreUsuario) LIKE '"+nombre+"' ;");
 			}
 			if(n>=2) {
-				st.execute("UPDATE `Usuario` SET `EP2` = '"+et[1]+"' ;");
+				st.execute("UPDATE `Usuario` SET `EP2` = '"+et[1]+"' WHERE ID ="+e.getId()+" AND UPPER(NombreUsuario) LIKE '"+nombre+"' ;");
 			}
 			if(n>=3) {
-				st.execute("UPDATE `Usuario` SET `EP3` = '"+et[2]+"' ;");
+				st.execute("UPDATE `Usuario` SET `EP3` = '"+et[2]+"' WHERE ID ="+e.getId()+" AND UPPER(NombreUsuario) LIKE '"+nombre+"' ;");
 			}
 		}
 		

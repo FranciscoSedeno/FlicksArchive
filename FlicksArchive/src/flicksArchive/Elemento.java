@@ -3,7 +3,7 @@ package flicksArchive;
 import java.sql.Date;
 import java.util.StringJoiner;
 
-public class Elemento {
+public class Elemento implements Comparable<Elemento>{
 	private int id;
 	private String titulo;
 	private String plataforma;
@@ -236,5 +236,9 @@ public class Elemento {
 		sj.add("nota: "+notaUsuario);
 		return sj.toString();
 		
+	}
+	@Override
+	public int compareTo(Elemento o) {
+		return (titulo.toUpperCase()).compareTo(o.titulo.toUpperCase());
 	}
 }
