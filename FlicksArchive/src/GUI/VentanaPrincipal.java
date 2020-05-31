@@ -53,6 +53,8 @@ public class VentanaPrincipal extends JPanel {
 	private JRadioButton rdFavoritos;
 	private JButton btLimpiar;
 	private JButton btEliminarEtiqueta;
+	private JLabel lblOrden;
+	private JComboBox cbOrden;
 	
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -85,8 +87,8 @@ public class VentanaPrincipal extends JPanel {
 		tabbedPane.addTab("Lista", null, Lista, null);
 		GridBagLayout gbl_Lista = new GridBagLayout();
 		gbl_Lista.columnWidths = new int[]{1850, 0};
-		gbl_Lista.rowHeights = new int[]{77, 862, 0};
-		gbl_Lista.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_Lista.rowHeights = new int[]{117, 862, 0};
+		gbl_Lista.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_Lista.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		Lista.setLayout(gbl_Lista);
 		
@@ -100,11 +102,11 @@ public class VentanaPrincipal extends JPanel {
 		panelFiltros.setLayout(null);
 		
 		JLabel labelBuscar = new JLabel("Buscador");
-		labelBuscar.setBounds(0, 0, 56, 16);
+		labelBuscar.setBounds(10, 0, 56, 16);
 		panelFiltros.add(labelBuscar);
 		
 		textFieldBuscar = new JTextField();
-		textFieldBuscar.setBounds(0, 16, 304, 22);
+		textFieldBuscar.setBounds(10, 16, 284, 22);
 		panelFiltros.add(textFieldBuscar);
 		textFieldBuscar.setColumns(10);
 		
@@ -149,6 +151,15 @@ public class VentanaPrincipal extends JPanel {
 		btEliminarEtiqueta = new JButton("Eliminar Etiqueta");
 		btEliminarEtiqueta.setBounds(1692, 15, 146, 25);
 		panelFiltros.add(btEliminarEtiqueta);
+		
+		lblOrden = new JLabel("Orden");
+		lblOrden.setBounds(10, 49, 46, 14);
+		panelFiltros.add(lblOrden);
+		
+		cbOrden = new JComboBox();
+		cbOrden.setModel(new DefaultComboBoxModel(new String[] {"A-Z", "Z-A", "Nota"}));
+		cbOrden.setBounds(10, 64, 118, 20);
+		panelFiltros.add(cbOrden);
 		
 		JPanel contentPane = new JPanel();
 		GridBagConstraints gbc_contentPane = new GridBagConstraints();
@@ -267,8 +278,13 @@ public class VentanaPrincipal extends JPanel {
 		btLimpiar.setActionCommand("LIMPIAR");
 		btEliminarEtiqueta.addActionListener(ctr);
 		btEliminarEtiqueta.setActionCommand("ELIMINAR ETIQUETAS");
+		cbOrden.setActionCommand("ORDENAR");
+		cbOrden.addActionListener(ctr);		
 		
-		
+	}
+	
+	public int getOrden () {
+		return cbOrden.getSelectedIndex();
 	}
 	
 	public void estadoFiltrado(Filtro fil) {

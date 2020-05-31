@@ -48,6 +48,18 @@ public class Controlador implements ActionListener, ChangeListener {
 				gestorEtiquetas.setListaEtiquetas(lista.getFiltro().etiquetasSinUso());
 				gestorEtiquetas.controlador(contEtiquetas);
 				gestorEtiquetas.setVisible(true);
+			} else if (comando.equals("ORDENAR")) {
+				int index = ventana.getOrden();
+				
+				if (index == 0) {
+					
+					lista.ordenaA_Z();
+				} else if (index == 1) {
+					lista.ordenaZ_A();
+				} else if (index == 2) {
+					lista.ordenaNota();
+				}
+				ventana.refrescar(lista);
 			}
 			
 		}catch (Exception exc){
