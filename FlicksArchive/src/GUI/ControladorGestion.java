@@ -25,11 +25,14 @@ public class ControladorGestion implements ActionListener {
 		Elemento elem = lista.conseguirElemento(Integer.parseInt(comando[1]));
 		try {
 			if (comando[0].equals("GUARDAR")) {
-				
+				try {
 				gestion.actualizarelemento(lista.getFiltro(), elem);
 				
 				gestion.dispose();
-				
+				} catch (NumberFormatException exc) {
+					// TODO: handle exception
+					JOptionPane.showMessageDialog(gestion, "El valor introducido en el campo progreso no es correcto");
+				}
 			} else if (comando[0].equals("ELIMINAR")) {
 				
 				ConfirmarAccion ventanaAccion = new ConfirmarAccion(elem.getId(), ventana,elem.getTitulo(), "Eliminar");

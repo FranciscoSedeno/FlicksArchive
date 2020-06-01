@@ -19,6 +19,7 @@ import java.net.URL;
 import java.awt.GridBagConstraints;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -34,7 +35,8 @@ public class VentanaGestion extends JFrame {
 	private JButton btnEliminar;
 	private JRadioButton rdbtnFavorito;
 	@SuppressWarnings("rawtypes")
-	private JComboBox CBnotas, CBestado, cbProgreso;	
+	private JComboBox CBnotas, CBestado;
+	private JComboBox<Integer> cbProgreso;
 	private JTextField txtGenUsu1;
 	private JTextField textGenUsu2;
 	private JTextField textGenUsu3;
@@ -215,14 +217,17 @@ public class VentanaGestion extends JFrame {
 		btnGuardar.addActionListener(ctr);
 	}
 	
-	public void actualizarelemento(Filtro filtro, Elemento elem) 
+	public void actualizarelemento(Filtro filtro, Elemento elem) throws NumberFormatException
 	{
 		String aux;
+		System.out.println(cbProgreso.getModel().getSize() );
 		elem.setFavorito(rdbtnFavorito.isSelected());
 		if (Integer.parseInt((String) cbProgreso.getSelectedItem()) < 0) {
 			elem.setProgreso(0);
-		} else if (Integer.parseInt((String) cbProgreso.getSelectedItem()) > cbProgreso.getModel().getSize()-1) {
-			elem.setProgreso(cbProgreso.getModel().getSize());
+			cbProgreso.getModel().getSize();
+		} else if (Integer.parseInt((String) cbProgreso.getSelectedItem()) >= cbProgreso.getModel().getSize()) {
+			System.out.println("HOLA");
+			elem.setProgreso(cbProgreso.getModel().getSize()-1);
 		} else {
 			elem.setProgreso(cbProgreso.getSelectedIndex());
 		}
