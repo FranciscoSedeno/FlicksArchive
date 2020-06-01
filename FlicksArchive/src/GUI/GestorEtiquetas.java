@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -76,7 +77,7 @@ public class GestorEtiquetas extends JFrame {
 		contentPane.updateUI();
 	}
 	
-	public void controlador(ControladorEtiquetas contEtiquetas)
+	public void controlador(ActionListener contEtiquetas)
 	{
 		btnEliminar.addActionListener(contEtiquetas);
 		btnEliminar.setActionCommand("ELIMINAR ETIQUETA");

@@ -26,7 +26,7 @@ public class ControladorGestion implements ActionListener {
 		try {
 			if (comando[0].equals("GUARDAR")) {
 				
-				gestion.actualizarelemento(lista.getFiltro());
+				gestion.actualizarelemento(lista.getFiltro(), elem);
 				
 				gestion.dispose();
 				

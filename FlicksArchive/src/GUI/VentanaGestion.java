@@ -30,25 +30,20 @@ public class VentanaGestion extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private Elemento elem;
 	private JButton btnGuardar;
 	private JButton btnEliminar;
 	private JRadioButton rdbtnFavorito;
 	@SuppressWarnings("rawtypes")
-	private JComboBox CBnotas;
-	@SuppressWarnings("rawtypes")
-	private JComboBox CBestado;	
+	private JComboBox CBnotas, CBestado, cbProgreso;	
 	private JTextField txtGenUsu1;
 	private JTextField textGenUsu2;
 	private JTextField textGenUsu3;
 	private JLabel lbGenero1, lbGenero2, lbGenero3;
-	private JComboBox cbProgreso;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public VentanaGestion(String titulo, Elemento elemento,VentanaPrincipal ventana) 
+	public VentanaGestion(String titulo,Elemento elem,VentanaPrincipal ventana) 
 	{
 		super(titulo);
-		elem = elemento;
 		setPreferredSize(new Dimension(800, 600));
 		this.setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -157,8 +152,8 @@ public class VentanaGestion extends JFrame {
         lblGnero.setBounds(290, 179, 56, 16);
         panel.add(lblGnero);
         
-        Etiqueta[] etiquetasPre = elemento.etiquetasPredeterminadas();
-        Etiqueta[] etiquetasUsu = elemento.etiquetasUsuario();
+        Etiqueta[] etiquetasPre = elem.etiquetasPredeterminadas();
+        Etiqueta[] etiquetasUsu = elem.etiquetasUsuario();
         
         lbGenero1 = new JLabel((etiquetasPre[0]!=null)?etiquetasPre[0].getNombre():"");
         lbGenero1.setBounds(290, 208, 89, 16);
@@ -198,7 +193,7 @@ public class VentanaGestion extends JFrame {
         lblN.setBounds(491, 46, 56, 16);
         panel.add(lblN);
         
-        String numCapitulos[] = new String[elemento.getNumCapitulos() + 1];
+        String numCapitulos[] = new String[elem.getNumCapitulos() + 1];
         for (int i = 0; i < numCapitulos.length; i++) 
         {
         	numCapitulos[i] = "" + i;
@@ -206,20 +201,20 @@ public class VentanaGestion extends JFrame {
         
         cbProgreso = new JComboBox();
         cbProgreso.setModel(new DefaultComboBoxModel(numCapitulos));
-        cbProgreso.setSelectedIndex(elemento.getProgreso());
+        cbProgreso.setSelectedIndex(elem.getProgreso());
         cbProgreso.setBounds(555, 45, 78, 22);
         panel.add(cbProgreso);
 	}
 	
 	
-	public void controlador (ActionListener ctr) {
+	public void controlador (ActionListener ctr, Elemento elem) {
 		btnEliminar.setActionCommand("ELIMINAR " + elem.getId());
 		btnEliminar.addActionListener(ctr);
 		btnGuardar.setActionCommand("GUARDAR " + elem.getId() + " " + " " + " ");
 		btnGuardar.addActionListener(ctr);
 	}
 	
-	public void actualizarelemento(Filtro filtro) 
+	public void actualizarelemento(Filtro filtro, Elemento elem) 
 	{
 		String aux;
 		elem.setFavorito(rdbtnFavorito.isSelected());

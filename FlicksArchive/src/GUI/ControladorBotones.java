@@ -27,7 +27,7 @@ public class ControladorBotones implements ActionListener {
 				elem = lista.conseguirElemento(Integer.parseInt(comando[1]));
 				VentanaGestion gestion = new VentanaGestion("Gestionar elemento", elem, ventana);
 				ControladorGestion contGestion = new ControladorGestion(gestion,lista, ventana);
-				gestion.controlador(contGestion);
+				gestion.controlador(contGestion,elem);
 				gestion.setVisible(true);
 			} else if (comando[0].equals("BUSCA")) {
 				
