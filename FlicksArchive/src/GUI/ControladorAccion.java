@@ -54,7 +54,6 @@ public class ControladorAccion implements ActionListener {
 				elem = lista.conseguirElemento(Integer.parseInt(comando[2]));
 				lista.eliminarElemento(elem.getId());
 				ventana.refrescar(lista);
-				ventana.panel.updateUI();
 				venGes.dispose();
 				
 				

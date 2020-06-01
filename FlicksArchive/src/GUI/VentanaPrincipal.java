@@ -38,13 +38,13 @@ import javax.swing.JRadioButton;
 public class VentanaPrincipal extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
-	public JTextField buscador;
+	private JTextField buscador;
 	private JButton aceptar;
 	private List<JButton> botonesLista = new ArrayList<JButton>();
 	private List<JButton> botonesBusca = new ArrayList<JButton>();
-	public JPanel panelBusqueda;
-	public JPanel panel;
-	public JTabbedPane tabbedPane;
+	private JPanel panelBusqueda;
+	private JPanel panel;
+	private JTabbedPane tabbedPane;
 	private JTextField textFieldBuscar;
 	@SuppressWarnings("rawtypes")
 	private JComboBox cbEtiqueta1, cbEtiqueta2, cbEtiqueta3, cbEstado;
@@ -73,7 +73,7 @@ public class VentanaPrincipal extends JPanel {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(SystemColor.activeCaptionBorder);
 		tabbedPane.setBorder(null);
-		tabbedPane.setPreferredSize(new Dimension(1920, 1020));
+		tabbedPane.setPreferredSize(new Dimension(rec.width, rec.height));
 		GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
 		gbc_tabbedPane.insets = new Insets(0, 0, 5, 5);
 		gbc_tabbedPane.fill = GridBagConstraints.BOTH;
@@ -283,6 +283,10 @@ public class VentanaPrincipal extends JPanel {
 		
 	}
 	
+	public void setTextoBuscador(String texto) {
+		buscador.setText(texto);
+	}
+	
 	public int getOrden () {
 		return cbOrden.getSelectedIndex();
 	}
@@ -388,5 +392,15 @@ public class VentanaPrincipal extends JPanel {
 				panelBusqueda.updateUI();
 			}
 		}	
+	}
+
+	public void borraTodo() {
+		// TODO Auto-generated method stub
+		panelBusqueda.removeAll();
+	}
+
+	public int getIndicetab() {
+		// TODO Auto-generated method stub
+		return tabbedPane.getSelectedIndex();
 	}
 }

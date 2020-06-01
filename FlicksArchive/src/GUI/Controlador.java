@@ -72,12 +72,12 @@ public class Controlador implements ActionListener, ChangeListener {
 	public void stateChanged(ChangeEvent e) {
 		
 		try {
-			if(ventana.tabbedPane.getSelectedIndex() == 0)
+			if(ventana.getIndicetab() == 0)
 			{
 				ventana.refrescar(lista);
 				ventana.setModelComboBox(lista);
-				ventana.buscador.setText("");
-		    	ventana.panelBusqueda.removeAll();
+				ventana.setTextoBuscador("");
+		    	ventana.borraTodo();
 			}
 			
 		} catch (Exception exc){

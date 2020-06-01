@@ -220,13 +220,11 @@ public class VentanaGestion extends JFrame {
 	public void actualizarelemento(Filtro filtro, Elemento elem) throws NumberFormatException
 	{
 		String aux;
-		System.out.println(cbProgreso.getModel().getSize() );
 		elem.setFavorito(rdbtnFavorito.isSelected());
 		if (Integer.parseInt((String) cbProgreso.getSelectedItem()) < 0) {
 			elem.setProgreso(0);
 			cbProgreso.getModel().getSize();
 		} else if (Integer.parseInt((String) cbProgreso.getSelectedItem()) >= cbProgreso.getModel().getSize()) {
-			System.out.println("HOLA");
 			elem.setProgreso(cbProgreso.getModel().getSize()-1);
 		} else {
 			elem.setProgreso(cbProgreso.getSelectedIndex());
