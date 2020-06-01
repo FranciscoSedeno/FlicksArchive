@@ -89,7 +89,7 @@ public class VentanaPrincipal extends JPanel {
 		gbl_Lista.columnWidths = new int[]{1850, 0};
 		gbl_Lista.rowHeights = new int[]{117, 862, 0};
 		gbl_Lista.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_Lista.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_Lista.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		Lista.setLayout(gbl_Lista);
 		
 		JPanel panelFiltros = new JPanel();

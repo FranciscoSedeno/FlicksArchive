@@ -203,6 +203,7 @@ public class VentanaGestion extends JFrame {
         cbProgreso.setModel(new DefaultComboBoxModel(numCapitulos));
         cbProgreso.setSelectedIndex(elem.getProgreso());
         cbProgreso.setBounds(555, 45, 78, 22);
+        cbProgreso.setEditable(true);
         panel.add(cbProgreso);
 	}
 	
@@ -218,7 +219,14 @@ public class VentanaGestion extends JFrame {
 	{
 		String aux;
 		elem.setFavorito(rdbtnFavorito.isSelected());
-		elem.setProgreso(cbProgreso.getSelectedIndex());
+		if (Integer.parseInt((String) cbProgreso.getSelectedItem()) < 0) {
+			elem.setProgreso(0);
+		} else if (Integer.parseInt((String) cbProgreso.getSelectedItem()) > cbProgreso.getModel().getSize()-1) {
+			elem.setProgreso(cbProgreso.getModel().getSize());
+		} else {
+			elem.setProgreso(cbProgreso.getSelectedIndex());
+		}
+		
 		elem.resetearEtiquetas();
 		aux = txtGenUsu1.getText();
 		if(!aux.equals(""))
