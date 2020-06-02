@@ -27,24 +27,7 @@ public class Filtro {
 	 */
 	public Etiqueta pedirEtiqueta(String n) {
 		Etiqueta sol, aux;
-		sol = null;
-		Iterator <Etiqueta> i = etiquetasPredeterminadas.iterator();
-		while(i.hasNext() && sol == null) {
-			aux = i.next();
-			if(aux.getNombre().equalsIgnoreCase(n)) {
-				sol = aux;
-			}
-		}
-		
-		Iterator<Etiqueta> it = etiquetasUsuario.iterator();
-		
-		while(it.hasNext() && sol==null) {
-			aux= it.next();
-			if(aux.getNombre().equalsIgnoreCase(n)) {
-				sol = aux;
-			}
-			
-		}
+		sol = buscaEtiqueta(n);
 		
 		if(sol == null) {
 			sol = new Etiqueta(n);
