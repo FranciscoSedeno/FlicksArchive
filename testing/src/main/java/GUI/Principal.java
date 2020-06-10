@@ -27,8 +27,8 @@ public class Principal {
 			Lista prueba;
 			
 			
-			//Conexion conexion = new Conexion("Fran");
-			prueba = new Lista("Fran");
+			Conexion conexion = new Conexion("Fran");
+			prueba = new Lista("Fran",conexion);
 			
 			
 			marco.setPreferredSize(new Dimension(rec.width, rec.height));

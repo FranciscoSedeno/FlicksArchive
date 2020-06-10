@@ -15,7 +15,7 @@ public class Lista {
 	
 	public Lista(String nombre) throws SQLException {
 		nombreUsuario = nombre;
-		conexion = new Conexion(nombreUsuario);
+		conexion = new Conexion(nombre);
 		listaElementos= new HashMap<Integer, Elemento>();
 		listaPlataformas=new TreeSet<String>();
 		conexion.inicializarDatos(listaElementos,listaPlataformas,filtro);
@@ -23,7 +23,17 @@ public class Lista {
 		
 	}
 	
+	//Solo para testing
+	public Lista(String nombre, Conexion conexion2,Filtro filtro2) throws SQLException {
+		nombreUsuario = nombre;
+		conexion = conexion2;
+		filtro=filtro2;
+		listaElementos= new HashMap<Integer, Elemento>();
+		listaPlataformas=new TreeSet<String>();
 	
+	}
+
+
 	/*
 	 * Funciones para consultar a la base de datos sobre elementos del catalogo
 	 */

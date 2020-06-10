@@ -4,12 +4,12 @@ import java.sql.*;
 import java.util.*;
 
 public class Conexion {
-	 final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-     final String DB_URL = "jdbc:mysql://database-iis.cobadwnzalab.eu-central-1.rds.amazonaws.com";
-     final String DB_SCHEMA = "flicksdb";
+	 private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	 private static final String DB_URL = "jdbc:mysql://database-iis.cobadwnzalab.eu-central-1.rds.amazonaws.com";
+	 private static final String DB_SCHEMA = "flicksdb";
      private Connection conn;
-     final String USER = "flickr";
-     final String PASS = "distanciafocal";
+     private static final String USER = "flickr";
+     private static final String PASS = "distanciafocal";
      private String nombre;
      
      
@@ -61,6 +61,62 @@ public class Conexion {
 		st.close();
 		
 	}
+	public static boolean verificacion(String nombre,String contrase) {
+		try {
+			Class.forName(JDBC_DRIVER);
+		} catch (ClassNotFoundException e1) {
+			System.err.println("Error buscando clase.");
+		}
+		boolean r=false;
+		try(Connection conn = DriverManager.getConnection(DB_URL + "/" + DB_SCHEMA,USER,PASS)){
+			
+			Statement st = conn.createStatement();
+			ResultSet rs=st.executeQuery("SELECT NombreUsuario FROM Password WHERE NombreUsuario LIKE '"+nombre.toUpperCase()+"' AND Password LIKE '"+contrase+"';" );
+			r=rs.next();
+			
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			
+		}
+		return r;
+	}
+	public static boolean disponible(String nombre)  {
+		try {
+			Class.forName(JDBC_DRIVER);
+		} catch (ClassNotFoundException e1) {
+			System.err.println("Error buscando clase.");
+		}
+		boolean r=false;
+		try(Connection conn = DriverManager.getConnection(DB_URL + "/" + DB_SCHEMA,USER,PASS)){
+			
+			Statement st = conn.createStatement();
+			ResultSet rs=st.executeQuery("SELECT NombreUsuario FROM Password WHERE NombreUsuario LIKE '"+nombre.toUpperCase()+"';" );
+			r=!rs.next();
+			
+		} catch (SQLException e) {
+			System.err.println("Error conectando con la BD.");
+			
+		}
+		return r;
+	}
+	public static void registro(String nombre,String contrase) {
+		try {
+			Class.forName(JDBC_DRIVER);
+		} catch (ClassNotFoundException e1) {
+			System.err.println("Error buscando clase.");
+		}
+
+		try(Connection conn = DriverManager.getConnection(DB_URL + "/" + DB_SCHEMA,USER,PASS)){
+			
+			Statement st = conn.createStatement();
+			st.executeUpdate("INSERT INTO Password VALUES ('"+nombre.toUpperCase()+"','"+contrase+"');" );
+			
+			
+		} catch (SQLException e) {
+			System.err.println("Error conectando con la BD.");
+			
+		}
+	}
 	public List<Tupla> buscarPorTitulo(String titulo) throws SQLException{
 		List<Tupla> sol = new LinkedList<>();
 		Statement st = conn.createStatement();
@@ -88,6 +144,7 @@ public class Conexion {
 		st.close();
 		return elem;
 	}
+	
 	public void actualizar(Collection<Elemento> l, Collection<Etiqueta> etiquetas) throws SQLException {
 		Statement st= conn.createStatement();
 
