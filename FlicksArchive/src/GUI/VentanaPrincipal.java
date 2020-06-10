@@ -55,6 +55,7 @@ public class VentanaPrincipal extends JPanel {
 	private JButton btEliminarEtiqueta;
 	private JLabel lblOrden;
 	private JComboBox cbOrden;
+	private JScrollPane scrollPane_2;
 	
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -92,13 +93,16 @@ public class VentanaPrincipal extends JPanel {
 		gbl_Lista.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		Lista.setLayout(gbl_Lista);
 		
+		scrollPane_2 = new JScrollPane();
+		GridBagConstraints gbc_scrollPane_2 = new GridBagConstraints();
+		gbc_scrollPane_2.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane_2.insets = new Insets(0, 0, 5, 0);
+		gbc_scrollPane_2.gridx = 0;
+		gbc_scrollPane_2.gridy = 0;
+		Lista.add(scrollPane_2, gbc_scrollPane_2);
+		
 		JPanel panelFiltros = new JPanel();
-		GridBagConstraints gbc_panelFiltros = new GridBagConstraints();
-		gbc_panelFiltros.fill = GridBagConstraints.BOTH;
-		gbc_panelFiltros.insets = new Insets(0, 0, 5, 0);
-		gbc_panelFiltros.gridx = 0;
-		gbc_panelFiltros.gridy = 0;
-		Lista.add(panelFiltros, gbc_panelFiltros);
+		scrollPane_2.setViewportView(panelFiltros);
 		panelFiltros.setLayout(null);
 		
 		JLabel labelBuscar = new JLabel("Buscador");
