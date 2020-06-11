@@ -17,6 +17,7 @@ public class Elemento implements Comparable<Elemento>{
 	private String URL_Imagen;
 	private int numCapitulos;
 	private int progreso = 0;
+	private boolean pelicula=false;
 	
 	private int contEtiqD = 0;
 	private Etiqueta[] etiquetasPre = new Etiqueta[3];
@@ -119,12 +120,12 @@ public class Elemento implements Comparable<Elemento>{
 		int c=0;
 		boolean encontrado =false;
 		while(c<contEtiqUsu && !encontrado) {
-			encontrado=(etiquetasUsuario[c].getNombre().equals(et));
+			encontrado=(etiquetasUsuario[c].getNombre().equals(et.toUpperCase()));
 			c++;
 		}
 		c=0;
 		while(c<contEtiqD && !encontrado) {
-			encontrado=(etiquetasPre[c].getNombre().equals(et));
+			encontrado=(etiquetasPre[c].getNombre().equals(et.toUpperCase()));
 			c++;
 		}
 		return encontrado;
@@ -212,6 +213,12 @@ public class Elemento implements Comparable<Elemento>{
 	}
 	public void setProgreso(int progreso) {
 		this.progreso = progreso;
+	}
+	public boolean isPelicula() {
+		return pelicula;
+	}
+	public void setPelicula(boolean pelicula) {
+		this.pelicula = pelicula;
 	}
 	/*
 	 * Funciones propias de objetos.

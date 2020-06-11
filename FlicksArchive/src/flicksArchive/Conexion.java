@@ -1,7 +1,9 @@
 package flicksArchive;
 
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
+
 
 public class Conexion {
 	 private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -28,19 +30,26 @@ public class Conexion {
 			e.printStackTrace();
 		}
 	}
-	public void inicializarDatos(Map<Integer,Elemento> lista,Set<String> plataformas,Filtro filtro) throws SQLException {
+	public void inicializarDatos(Map<Integer,Elemento> lista,Set<String> plataformas,Filtro filtro,List<Notificacion> notificaciones) throws SQLException {
 		Statement st= conn.createStatement();
 		
+		long millis=System.currentTimeMillis();
+		Date today=new Date(millis);
+		Date monthlater = Date.valueOf(today.toLocalDate().plusMonths(1));
+		Date yesterday =new Date(millis- 24*60*60*1000);
+
 		ResultSet rs= st.executeQuery("SELECT NombreEtiqueta FROM Etiqueta WHERE NombreUsuario LIKE '"+nombre+"' ;");
 		while(rs.next()) {
 			filtro.pedirEtiqueta(rs.getString(1));
 		}
 		
-		rs= st.executeQuery("SELECT Titulo,FechaPublicacion,FechaRetirada,Descripcion,URL_Imagen,c.ID, Estado, Favorito, Nota,Nombre_Plataforma, EP1, EP2, EP3, ED1, ED2, ED3, TOTAL, PROGRESO FROM Usuario u JOIN Catalogo c on (c.ID=u.ID) WHERE u.NombreUsuario LIKE '"+nombre+"' ;");
+		rs= st.executeQuery("SELECT Titulo,FechaPublicacion,FechaRetirada,Descripcion,URL_Imagen,c.ID, Estado, Favorito, Nota,Nombre_Plataforma, EP1, EP2, EP3, ED1, ED2, ED3, TOTAL, PROGRESO, esPelicula FROM Usuario u JOIN Catalogo c on (c.ID=u.ID) WHERE u.NombreUsuario LIKE '"+nombre+"' ;");
 		
 		while(rs.next()) {
 			Elemento e = new Elemento(rs.getString(1),rs.getDate(2),rs.getDate(3),rs.getString(4),rs.getString(5),rs.getInt(6),rs.getString(10),rs.getInt(17),rs.getInt(7),rs.getBoolean(8),rs.getInt(9), rs.getInt(18));
 			lista.put(rs.getInt(6),e);
+			
+			e.setPelicula(rs.getBoolean(19));
 			
 			for(int i = 11;i<17 ;i++) {
 				String aux= rs.getString(i);
@@ -55,7 +64,15 @@ public class Conexion {
 					}
 				}
 			}
+			Date datep =e.getFechaPublicacion();
+			Date dater =e.getFechaRetirada();
 			
+			if(datep.before(today) && datep.after(yesterday)) {
+				notificaciones.add(new Notificacion(e, 0));
+			}
+			if(dater.after(today) && dater.before(monthlater)){
+				notificaciones.add(new Notificacion(e, 1));
+			}
 			plataformas.add(rs.getString(10).toUpperCase());
 		}
 		st.close();
@@ -130,9 +147,10 @@ public class Conexion {
 	public Elemento buscarElemento(int id, Filtro f) throws SQLException {
 		Statement st = conn.createStatement();
 		Elemento elem=null;
-		ResultSet rs = st.executeQuery("SELECT Titulo,FechaPublicacion,FechaRetirada,Descripcion, URL_Imagen,ID, Nombre_Plataforma,ED1, ED2, ED3, TOTAL FROM Catalogo WHERE  ID="+id+";");
+		ResultSet rs = st.executeQuery("SELECT Titulo,FechaPublicacion,FechaRetirada,Descripcion, URL_Imagen,ID, Nombre_Plataforma,ED1, ED2, ED3, TOTAL,esPelicula FROM Catalogo WHERE  ID="+id+";");
 		if(rs.next()) {
 			elem=new Elemento(rs.getString(1), rs.getDate(2), rs.getDate(3), rs.getString(4), rs.getString(5), rs.getInt(6),rs.getString(7),rs.getInt(11));
+			elem.setPelicula(rs.getBoolean(12));
 		}
 		for(int i=8;i<11;i++) {
 			String aux= rs.getString(i);

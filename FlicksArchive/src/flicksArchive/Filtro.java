@@ -13,6 +13,7 @@ public class Filtro {
 	private boolean favoritoActivo=false;
 	private estadoVisualizacion estadoBuscado = null;
 	private String fragmentoTitulo =null;
+	private Boolean pelicula =null;
 	
 	public Filtro() {
 		etiquetasPredeterminadas = Etiqueta.etiquetasPorDefecto();
@@ -26,7 +27,7 @@ public class Filtro {
 	 * Metodos para la creacion y obtencion de etiquetas
 	 */
 	public Etiqueta pedirEtiqueta(String n) {
-		Etiqueta sol, aux;
+		Etiqueta sol;
 		sol = buscaEtiqueta(n);
 		
 		if(sol == null) {
@@ -123,6 +124,9 @@ public class Filtro {
 	public void setEstadoBuscado(estadoVisualizacion estadoBuscado) {
 		this.estadoBuscado = estadoBuscado;
 	}
+	public void setPelicula(Boolean pelicula) {
+		this.pelicula = pelicula;
+	}
 	
 	public void setFragmentoTitulo(String fragmentoTitulo) {
 		if(fragmentoTitulo != null)
@@ -179,7 +183,9 @@ public class Filtro {
 			if(favoritoActivo) {
 				sol=filtroFavorito(sol);
 			}
-			
+			if(pelicula!=null) {
+				sol=filtroPelicula(sol, pelicula);
+			}
 			if(estadoBuscado!=null) {
 				sol=filtroEstado(sol, estadoBuscado);
 			}
@@ -226,6 +232,23 @@ public class Filtro {
 			elem=it.next();
 			
 			if(elem.isFavorito()) {
+				sol.add(elem);
+			}
+
+		
+		}
+		return sol;
+	}
+	private List<Elemento> filtroPelicula (Collection<Elemento> lista,boolean b){
+		Iterator<Elemento> it = lista.iterator();
+		Elemento elem;
+		List<Elemento> sol = new LinkedList<>();
+	
+		
+		while(it.hasNext()) {
+			elem=it.next();
+			
+			if(elem.isPelicula()==b ) {
 				sol.add(elem);
 			}
 

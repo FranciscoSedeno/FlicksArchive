@@ -74,10 +74,8 @@ public class ControladorInicio implements ActionListener, WindowListener {
 			Lista prueba;
 			
 			
-			//Conexion conexion = new Conexion("Fran");
 
 			prueba = new Lista(usuario);
-			
 			
 			marco.setPreferredSize(new Dimension(rec.width, rec.height));
 			GridBagLayout gridBagLayout = new GridBagLayout();

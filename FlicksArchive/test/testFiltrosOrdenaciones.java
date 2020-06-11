@@ -15,10 +15,10 @@ public class testFiltrosOrdenaciones {
 	
 	private Conexion con = mock(Conexion.class);
 	private Date d = new Date(0);
-	private Elemento e1 = new Elemento("CCCCC", d, d, "Hola que tal", "", 0, "NETFLIX", 20, 0, true, 10, 1);
-	private Elemento e2 = new Elemento("BBBBB", d, d, "Falta daño", "", 1, "HBO", 10, 1, true, 5, 1);
-	private Elemento e3 = new Elemento("AAAAA", d, d, "Que tal", "", 2, "NETFLIX", 5, 2, false, 3, 1);
-	private Elemento e4 = new Elemento("CAAAA", d, d, "Que tal", "", 3, "NETFLIX", 5, 0, false, 0, 1);
+	private Elemento e1 ;
+	private Elemento e2 ;
+	private Elemento e3 ;
+	private Elemento e4 ;
 	private Filtro filtro ;
 	private Lista lista;
 	
@@ -43,6 +43,7 @@ public class testFiltrosOrdenaciones {
 		e3.anadirEtiqueta(filtro, "C");
 		e4.anadirEtiqueta(filtro, "D");
 		e4.anadirEtiqueta(filtro, "E");
+		
 		lista = new Lista("Prueba",con,filtro);
 		lista.añadirElemento(lista.extraerElementoBD(0));
 		lista.añadirElemento(lista.extraerElementoBD(1));

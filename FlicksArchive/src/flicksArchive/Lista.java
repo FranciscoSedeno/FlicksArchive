@@ -3,6 +3,8 @@ package flicksArchive;
 import java.sql.SQLException;
 import java.util.*;
 
+import flicksArchive.Notificacion.motivoNotificacion;
+
 public class Lista {
 	
 	private String nombreUsuario;
@@ -11,14 +13,15 @@ public class Lista {
 	private Conexion conexion;
 	private Comparator<Elemento> ordenacion= Comparator.naturalOrder();
 	private Filtro filtro=new Filtro();
-	//private List<Notificaciones> listaNotificaciones;
+	private List<Notificacion> listaNotificaciones;
 	
 	public Lista(String nombre) throws SQLException {
 		nombreUsuario = nombre;
 		conexion = new Conexion(nombre);
 		listaElementos= new HashMap<Integer, Elemento>();
 		listaPlataformas=new TreeSet<String>();
-		conexion.inicializarDatos(listaElementos,listaPlataformas,filtro);
+		listaNotificaciones=new ArrayList<Notificacion>();
+		conexion.inicializarDatos(listaElementos,listaPlataformas,filtro,listaNotificaciones);
 		
 		
 	}
@@ -69,6 +72,34 @@ public class Lista {
 		etiq.add(0, new Etiqueta("-"));
 		
 		return etiq;
+	}
+	public String logNotificaciones() {
+		StringJoiner publicaciones = new StringJoiner("\n");
+		StringJoiner descatalogadas = new StringJoiner("\n");
+		int p=0,d=0;
+		publicaciones.add("<html><h1 style=\"background-color:powderblue;\">PUBLICACIONES</h1></html>");
+		descatalogadas.add("<html><h1 style=\"background-color:tomato;\">RETIRADAS</h1></html>");
+		
+		for (Notificacion notificacion : listaNotificaciones) {
+			if(notificacion.getMotivo().equals(motivoNotificacion.PUBLICACION)) {
+				publicaciones.add(notificacion.toString());
+				p++;
+			}else {
+				descatalogadas.add(notificacion.toString());
+				d++;
+			}
+			
+		}
+		if(d==0) {
+			descatalogadas.add("Ningun elemento de tu lista.");
+		}
+		if(p==0) {
+			publicaciones.add("Ningun elemento de tu lista.");
+		}
+		publicaciones.add("");
+		publicaciones.add(descatalogadas.toString());
+		return publicaciones.toString();
+		
 	}
 	/*
 	 * Funciones para manipular la Lista de Elementos
