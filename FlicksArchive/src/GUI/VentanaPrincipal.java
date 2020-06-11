@@ -380,6 +380,8 @@ public class VentanaPrincipal extends JPanel {
 			fil.setPelicula(false);
 		} else if (tipo == 2) {
 			fil.setPelicula(true);
+		} else {
+			fil.setPelicula(null);
 		}
 		
 	}
