@@ -7,6 +7,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import flicksArchive.Conexion;
@@ -17,9 +18,9 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 public class Principal {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	
+	
+	public void crearGUI () {
 		try 
 		{
 			JFrame marco = new JFrame("Flicks Archive");
@@ -28,6 +29,7 @@ public class Principal {
 			
 			
 			//Conexion conexion = new Conexion("Fran");
+
 			prueba = new Lista("Fran");
 			
 			
@@ -44,7 +46,6 @@ public class Principal {
 			VentanaPrincipal window = new VentanaPrincipal();
 			window.refrescar(prueba);
 			window.setModelComboBox(prueba);
-			//JScrollPane sp = new JScrollPane(window, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 			GridBagConstraints gbc_window = new GridBagConstraints();
 			gbc_window.insets = new Insets(0, 0, 5, 5);
 			gbc_window.fill = GridBagConstraints.BOTH;
@@ -56,6 +57,7 @@ public class Principal {
 			marco.pack();
 			Controlador ctr = new Controlador(prueba, window);
 			window.controlador(ctr);
+			marco.pack();
 			marco.setVisible(true);
 			
 			marco.addWindowListener(new WindowAdapter() 
@@ -80,6 +82,19 @@ public class Principal {
 			System.err.println("Error accediendo a la Base de datos");
 			System.exit(-1);
 		}
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		VentanaInicio inicio = new VentanaInicio();
+		ControladorInicio contInicio = new ControladorInicio(inicio);
+		ImageIcon img = new ImageIcon(Principal.class.getResource("/img/FAicon.png"));
+		inicio.setIconImage(img.getImage());
+		inicio.controlador(contInicio);
+		inicio.setVisible(true);
+		
+		
 		
 	}
 

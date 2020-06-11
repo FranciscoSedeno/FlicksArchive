@@ -15,11 +15,13 @@ import flicksArchive.Lista;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class GestorEtiquetas extends JFrame {
 
 	private JPanel contentPane;
+	@SuppressWarnings("rawtypes")
 	private JComboBox comboBox;
 	private JButton btnEliminar;
 
@@ -44,6 +46,8 @@ public class GestorEtiquetas extends JFrame {
 	 */
 	public GestorEtiquetas() 
 	{
+		ImageIcon img = new ImageIcon(Principal.class.getResource("/img/FAicon.png"));
+		setIconImage(img.getImage());
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setBounds(741, 461, 438, 158);

@@ -46,6 +46,10 @@ public class VentanaGestion extends JFrame {
 	public VentanaGestion(String titulo,Elemento elem,VentanaPrincipal ventana) 
 	{
 		super(titulo);
+		
+		ImageIcon img = new ImageIcon(Principal.class.getResource("/img/FAicon.png"));
+		setIconImage(img.getImage());
+		
 		setPreferredSize(new Dimension(800, 600));
 		this.setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
