@@ -88,7 +88,7 @@ public class Conexion {
 		try(Connection conn = DriverManager.getConnection(DB_URL + "/" + DB_SCHEMA,USER,PASS)){
 			
 			Statement st = conn.createStatement();
-			ResultSet rs=st.executeQuery("SELECT NombreUsuario FROM Password WHERE NombreUsuario LIKE '"+nombre.toUpperCase()+"' AND Password LIKE '"+contrase+"';" );
+			ResultSet rs=st.executeQuery("SELECT NombreUsuario FROM Password WHERE NombreUsuario LIKE '"+nombre.toUpperCase()+"' AND UPPER(Password) LIKE '"+contrase.toUpperCase()+"';" );
 			r=rs.next();
 			
 		} catch (SQLException e) {
@@ -126,7 +126,7 @@ public class Conexion {
 		try(Connection conn = DriverManager.getConnection(DB_URL + "/" + DB_SCHEMA,USER,PASS)){
 			
 			Statement st = conn.createStatement();
-			st.executeUpdate("INSERT INTO Password VALUES ('"+nombre.toUpperCase()+"','"+contrase+"');" );
+			st.executeUpdate("INSERT INTO Password VALUES ('"+nombre.toUpperCase()+"','"+contrase.toUpperCase()+"');" );
 			
 			
 		} catch (SQLException e) {
