@@ -64,29 +64,29 @@ public class VentanaRegistro extends JFrame {
 		contentPane.add(tfUsuario);
 		tfUsuario.setColumns(10);
 		
-		lblUsuario = new JLabel("<html>Usuario (debe contener entre <br/>4 y 20 caracteres ):</html>",SwingConstants.LEFT);
+		lblUsuario = new JLabel("Usuario (debe contener entre 4 y 20 caracteres ):",SwingConstants.LEFT);
 		lblUsuario.setVerticalAlignment(SwingConstants.TOP);
-		lblUsuario.setBounds(30, 11, 270, 37);
+		lblUsuario.setBounds(30, 15, 356, 23);
 		contentPane.add(lblUsuario);
 		
-		lblCon = new JLabel("<html>Introduzca la contraseña que desea:<br/></html>",SwingConstants.LEFT);
-		lblCon.setBounds(30, 80, 270, 20);
+		lblCon = new JLabel("Introduzca la contraseña que desea (entre 4 y 20 caracteres):",SwingConstants.LEFT);
+		lblCon.setBounds(30, 80, 356, 28);
 		contentPane.add(lblCon);
 		
 		lblConfCon = new JLabel("Vuelva a introducir la contrase\u00F1a",SwingConstants.LEFT);
-		lblConfCon.setBounds(30, 142, 270, 14);
+		lblConfCon.setBounds(30, 150, 270, 14);
 		contentPane.add(lblConfCon);
 		
 		pfCont = new JPasswordField();
-		pfCont.setBounds(30, 111, 356, 20);
+		pfCont.setBounds(30, 119, 356, 20);
 		contentPane.add(pfCont);
 		
 		pfConfirmacion = new JPasswordField();
-		pfConfirmacion.setBounds(30, 167, 356, 20);
+		pfConfirmacion.setBounds(30, 175, 356, 20);
 		contentPane.add(pfConfirmacion);
 		
 		btnRegistrarse = new JButton("Registrarse");
-		btnRegistrarse.setBounds(30, 213, 113, 23);
+		btnRegistrarse.setBounds(30, 206, 113, 23);
 		contentPane.add(btnRegistrarse);
 		
 		lblError = new JLabel("");
