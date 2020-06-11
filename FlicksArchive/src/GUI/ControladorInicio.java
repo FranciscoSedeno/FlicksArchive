@@ -49,6 +49,8 @@ public class ControladorInicio implements ActionListener, WindowListener {
 			registro.setError("");
 			String usuario=registro.getusu();
 			String contraseña = registro.getcont();
+			usuario=estandarizar(usuario);
+			contraseña=estandarizar(contraseña);
 			String confirmacion = registro.getconfirmacion();
 			if (usuario.length()<4 || usuario.length()>20) {
 				registro.setError("<html>El usuario tiene que contener entre 4 y 20 caracteres</html>");
@@ -66,7 +68,17 @@ public class ControladorInicio implements ActionListener, WindowListener {
 			
 		}
 	}
-	
+	private String estandarizar(String s) {
+		
+		int n=s.length()-1;
+		
+		while (n>=0 && (s.charAt(n)==' ' || s.charAt(n)=='\n' || s.charAt(n)=='\t' )) {
+			n--;
+		}
+		
+		return s.substring(0,n+1);
+		
+	}
 	public void crearGUI (String usuario) {
 		try 
 		{
