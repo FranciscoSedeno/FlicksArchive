@@ -17,6 +17,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
 import flicksArchive.Elemento;
 import flicksArchive.Etiqueta;
@@ -34,6 +35,8 @@ import java.awt.SystemColor;
 import java.awt.FlowLayout;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
+import java.awt.Font;
 
 public class VentanaPrincipal extends JPanel {
 	
@@ -56,31 +59,32 @@ public class VentanaPrincipal extends JPanel {
 	private JLabel lblOrden;
 	private JComboBox cbOrden;
 	private JScrollPane scrollPane_2;
+	private JComboBox cbTipo;
+	private JLabel lblTipo;
+	private JPanel tabNot;
+	private JScrollPane spNot;
+	private JLabel lblNotificaciones;
+	private JTextPane taPublicaciones;
+	private JScrollPane scrollPane_3;
+	private JTextPane taRetiradas;
+	private JLabel lblPublicaciones;
+	private JLabel lblRetiradas;
 	
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public VentanaPrincipal() {
+	public VentanaPrincipal(String usuario) {
 		setBackground(SystemColor.textHighlight);
 		setName("FlicksArchive");
 		Rectangle rec = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
 		setPreferredSize(new Dimension(rec.width, rec.height));
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 1792, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 918, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		setLayout(gridBagLayout);
+		setLayout(null);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(30, 30, 1855, 975);
 		tabbedPane.setBackground(SystemColor.activeCaptionBorder);
 		tabbedPane.setBorder(null);
 		tabbedPane.setPreferredSize(new Dimension(rec.width, rec.height));
-		GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
-		gbc_tabbedPane.insets = new Insets(0, 0, 5, 5);
-		gbc_tabbedPane.fill = GridBagConstraints.BOTH;
-		gbc_tabbedPane.gridx = 1;
-		gbc_tabbedPane.gridy = 1;
-		add(tabbedPane, gbc_tabbedPane);
+		add(tabbedPane);
 		
 		JPanel Lista = new JPanel();
 		
@@ -164,6 +168,15 @@ public class VentanaPrincipal extends JPanel {
 		cbOrden.setModel(new DefaultComboBoxModel(new String[] {"A-Z", "Z-A", "Nota"}));
 		cbOrden.setBounds(10, 64, 118, 20);
 		panelFiltros.add(cbOrden);
+		
+		cbTipo = new JComboBox();
+		cbTipo.setModel(new DefaultComboBoxModel(new String[] {"-", "Serie", "Pel\u00EDcula"}));
+		cbTipo.setBounds(366, 64, 185, 20);
+		panelFiltros.add(cbTipo);
+		
+		lblTipo = new JLabel("Tipo:");
+		lblTipo.setBounds(366, 49, 46, 14);
+		panelFiltros.add(lblTipo);
 		
 		JPanel contentPane = new JPanel();
 		GridBagConstraints gbc_contentPane = new GridBagConstraints();
@@ -266,6 +279,47 @@ public class VentanaPrincipal extends JPanel {
 		scrollPane_1.setViewportView(panelBusqueda);
 		
 		buscador.setColumns(10);
+		
+		tabNot = new JPanel();
+		tabbedPane.addTab("Notificaciones", null, tabNot, null);
+		tabNot.setLayout(null);
+		
+		spNot = new JScrollPane();
+		spNot.setBorder(null);
+		spNot.setBounds(10, 116, 1830, 389);
+		tabNot.add(spNot);
+		
+		taPublicaciones = new JTextPane();
+		taPublicaciones.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		taPublicaciones.setEditable(false);
+		spNot.setViewportView(taPublicaciones);
+		
+		lblNotificaciones = new JLabel("Notificaciones para " + usuario);
+		lblNotificaciones.setFont(new Font("Sitka Display", Font.BOLD, 36));
+		lblNotificaciones.setBounds(10, 11, 423, 39);
+		tabNot.add(lblNotificaciones);
+		
+		scrollPane_3 = new JScrollPane();
+		scrollPane_3.setBorder(null);
+		scrollPane_3.setBounds(10, 561, 1830, 389);
+		tabNot.add(scrollPane_3);
+		
+		taRetiradas = new JTextPane();
+		taRetiradas.setBorder(null);
+		taRetiradas.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		scrollPane_3.setViewportView(taRetiradas);
+		taRetiradas.setEditable(false);
+		
+		lblPublicaciones = new JLabel("PUBLICACIONES");
+		lblPublicaciones.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblPublicaciones.setBounds(10, 61, 234, 34);
+		tabNot.add(lblPublicaciones);
+		
+		lblRetiradas = new JLabel("RETIRADAS");
+		lblRetiradas.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblRetiradas.setForeground(new Color(0, 0, 0));
+		lblRetiradas.setBounds(10, 516, 234, 34);
+		tabNot.add(lblRetiradas);
 	}
 	
 	public void controlador (Controlador ctr) {
@@ -321,6 +375,12 @@ public class VentanaPrincipal extends JPanel {
 		} else {
 			fil.setFragmentoTitulo(textFieldBuscar.getText());
 		}
+		int tipo = cbTipo.getSelectedIndex();
+		if (tipo==1) {
+			fil.setPelicula(false);
+		} else if (tipo == 2) {
+			fil.setPelicula(true);
+		}
 		
 	}
 	
@@ -332,6 +392,7 @@ public class VentanaPrincipal extends JPanel {
 		cbEtiqueta3.setModel(new DefaultComboBoxModel<>(botones.etiquetas().toArray()));
 		cbEstado.setSelectedIndex(0);
 		rdFavoritos.setSelected(false);
+		cbTipo.setSelectedIndex(0);
 		textFieldBuscar.setText("");
 		updateUI();
 	}
@@ -406,5 +467,12 @@ public class VentanaPrincipal extends JPanel {
 	public int getIndicetab() {
 		// TODO Auto-generated method stub
 		return tabbedPane.getSelectedIndex();
+	}
+
+	public void escribeNotificaciones(String[] logNotificaciones) {
+		// TODO Auto-generated method stub
+		taPublicaciones.setText(logNotificaciones[0]);
+		taRetiradas.setText(logNotificaciones[1]);
+		
 	}
 }

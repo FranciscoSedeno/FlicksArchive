@@ -73,12 +73,10 @@ public class Lista {
 		
 		return etiq;
 	}
-	public String logNotificaciones() {
-		StringJoiner publicaciones = new StringJoiner("\n");
-		StringJoiner descatalogadas = new StringJoiner("\n");
+	public String[] logNotificaciones() {
+		StringJoiner publicaciones = new StringJoiner("\n\n");
+		StringJoiner descatalogadas = new StringJoiner("\n\n");
 		int p=0,d=0;
-		publicaciones.add("<html><h1 style=\"background-color:powderblue;\">PUBLICACIONES</h1></html>");
-		descatalogadas.add("<html><h1 style=\"background-color:tomato;\">RETIRADAS</h1></html>");
 		
 		for (Notificacion notificacion : listaNotificaciones) {
 			if(notificacion.getMotivo().equals(motivoNotificacion.PUBLICACION)) {
@@ -92,13 +90,14 @@ public class Lista {
 		}
 		if(d==0) {
 			descatalogadas.add("Ningun elemento de tu lista.");
+		} else {
+			descatalogadas.add("");
 		}
 		if(p==0) {
 			publicaciones.add("Ningun elemento de tu lista.");
 		}
-		publicaciones.add("");
-		publicaciones.add(descatalogadas.toString());
-		return publicaciones.toString();
+		String[] array = {publicaciones.toString(),descatalogadas.toString()};
+		return array;
 		
 	}
 	/*

@@ -41,6 +41,7 @@ public class VentanaGestion extends JFrame {
 	private JTextField textGenUsu2;
 	private JTextField textGenUsu3;
 	private JLabel lbGenero1, lbGenero2, lbGenero3;
+	private JLabel lblTipo;
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public VentanaGestion(String titulo,Elemento elem,VentanaPrincipal ventana) 
@@ -196,7 +197,7 @@ public class VentanaGestion extends JFrame {
         panel.add(lbGeneroPerso);
         
         JLabel lblN = new JLabel("Progreso");
-        lblN.setBounds(491, 46, 56, 16);
+        lblN.setBounds(491, 18, 56, 16);
         panel.add(lblN);
         
         String numCapitulos[] = new String[elem.getNumCapitulos() + 1];
@@ -208,9 +209,13 @@ public class VentanaGestion extends JFrame {
         cbProgreso = new JComboBox();
         cbProgreso.setModel(new DefaultComboBoxModel(numCapitulos));
         cbProgreso.setSelectedIndex(elem.getProgreso());
-        cbProgreso.setBounds(555, 45, 78, 22);
+        cbProgreso.setBounds(555, 41, 78, 22);
         cbProgreso.setEditable(true);
         panel.add(cbProgreso);
+        String tipo = (elem.isPelicula()) ? "(Película)" : "(Serie)";
+        lblTipo = new JLabel(tipo);
+        lblTipo.setBounds(491, 45, 78, 14);
+        panel.add(lblTipo);
 	}
 	
 	

@@ -13,6 +13,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.SQLException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import flicksArchive.Conexion;
@@ -76,6 +77,8 @@ public class ControladorInicio implements ActionListener, WindowListener {
 			
 
 			prueba = new Lista(usuario);
+		
+			usuario = usuario.toUpperCase().charAt(0) + usuario.substring(1).toLowerCase();
 			
 			marco.setPreferredSize(new Dimension(rec.width, rec.height));
 			GridBagLayout gridBagLayout = new GridBagLayout();
@@ -87,7 +90,7 @@ public class ControladorInicio implements ActionListener, WindowListener {
 			
 			
 			
-			VentanaPrincipal window = new VentanaPrincipal();
+			VentanaPrincipal window = new VentanaPrincipal(usuario);
 			window.refrescar(prueba);
 			window.setModelComboBox(prueba);
 			GridBagConstraints gbc_window = new GridBagConstraints();
@@ -99,6 +102,8 @@ public class ControladorInicio implements ActionListener, WindowListener {
 			
 			marco.setResizable(true);
 			marco.pack();
+			ImageIcon img = new ImageIcon(Principal.class.getResource("/img/FAicon.png"));
+			marco.setIconImage(img.getImage());
 			Controlador ctr = new Controlador(prueba, window);
 			window.controlador(ctr);
 			marco.pack();
