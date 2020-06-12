@@ -8,8 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Random;
 
 import org.junit.jupiter.api.*;
@@ -44,6 +46,25 @@ public class testEtiquetasFiltro {
 		assertTrue(filtro.getEtiquetasUsuario().isEmpty());
 		assertFalse(filtro.etiquetas().isEmpty());
 		assertTrue(filtro.etiquetasSinUso().isEmpty());
+	}
+	@Test 
+	public void testEtiquetasSinUso() {
+		List<Etiqueta> l = filtro.etiquetasSinUso();
+		assertTrue(l.isEmpty());
+		
+		Etiqueta e = filtro.pedirEtiqueta("a");
+		l = filtro.etiquetasSinUso();
+		assertFalse(l.isEmpty());
+		assertTrue(l.contains(e));
+		
+		e1.anadirEtiqueta(filtro, "A");
+		l = filtro.etiquetasSinUso();
+		assertTrue(l.isEmpty());
+		
+		e1.resetearEtiquetas();
+		l = filtro.etiquetasSinUso();
+		assertFalse(l.isEmpty());
+		assertTrue(l.contains(e));
 	}
 	@Test
 	public void testBuscaEtiquetasNuevoFiltro() {
@@ -87,6 +108,17 @@ public class testEtiquetasFiltro {
 			assertEquals(0,e.getContador());
 		}
 		
+	}
+	@Test 
+	public void testComparadorEtiquetas() {
+		Etiqueta et1 =filtro.pedirEtiqueta("a");
+		Etiqueta et2 =filtro.pedirEtiqueta("b");
+		assertEquals(0, et1.compareTo(et2));
+		e1.anadirEtiqueta(filtro, "A");
+		assertEquals(1, et1.compareTo(et2));
+		e1.anadirEtiqueta(filtro, "B");
+		e2.anadirEtiqueta(filtro, "B");
+		assertEquals(-1, et1.compareTo(et2));
 	}
 	@Test
 	public void testPedirYBorrarEtiquetaDefectoComoUsuario() {
@@ -154,4 +186,19 @@ public class testEtiquetasFiltro {
 		assertEquals(0, lista.getFiltro().buscaEtiqueta("D").getContador());
 		assertEquals(0, lista.getFiltro().buscaEtiqueta("E").getContador());
 	}
+	
+	@Test 
+	public void testElementoErrores(){
+		String s="INveNtada";
+		assertThrows(IllegalArgumentException.class, ()->e1.anadirEtiquetaDefecto(filtro, s),"ETIQUETA POR DEFECTO NO RECOGIDA");
+		e2.anadirEtiquetaDefecto(filtro, this.s[3]);
+		assertThrows(IllegalArgumentException.class,()->e2.anadirEtiquetaDefecto(filtro, this.s[3]) ,"Has intentado añadir la etiqueta"+s.toUpperCase()+"pero ya estaba añadida.");
+		e3.anadirEtiquetaDefecto(filtro, this.s[0]);
+		e3.anadirEtiquetaDefecto(filtro, this.s[1]);
+		e3.anadirEtiquetaDefecto(filtro, this.s[2]);
+		assertThrows(IllegalArgumentException.class,()->e3.anadirEtiquetaDefecto(filtro, this.s[3]) ,"INTENTO DE AÑADIR MÁS ETIQUETAS DE LAS POSIBLES");
+		
+		
+	}
+	
 }
