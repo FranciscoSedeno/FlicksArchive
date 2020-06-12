@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.*;
 
+import com.mysql.fabric.xmlrpc.base.Array;
+
 import flicksArchive.Notificacion.motivoNotificacion;
 
 public class Lista {
@@ -32,6 +34,7 @@ public class Lista {
 		nombreUsuario = nombre;
 		conexion = conexion2;
 		filtro=filtro2;
+		listaNotificaciones=new ArrayList<Notificacion>();
 		listaElementos= new HashMap<Integer, Elemento>();
 		listaPlataformas=new TreeSet<String>();
 	
@@ -105,9 +108,14 @@ public class Lista {
 	 * Funciones para manipular la Lista de Elementos
 	 */
 	public void añadirElemento(Elemento elem) {
-		
 		long millis=System.currentTimeMillis();
 		Date today=new Date(millis);
+		
+		actualizarNotificaciones(today,elem, listaNotificaciones);
+		listaElementos.put(elem.getId(), elem);
+		
+	}
+	public static void actualizarNotificaciones(Date today,Elemento elem,List<Notificacion> notificaciones) {
 		
 		Date monthlater = Date.valueOf(today.toLocalDate().plusMonths(1));
 		Date weekago = Date.valueOf(today.toLocalDate().minusWeeks(1));
@@ -116,18 +124,29 @@ public class Lista {
 		Date dater =elem.getFechaRetirada();
 		
 		if(datep.before(today) && datep.after(weekago)) {
-			listaNotificaciones.add(new Notificacion(elem, 0));
+			notificaciones.add(new Notificacion(elem, 0));
 		}
 		if(dater.after(today) && dater.before(monthlater)){
-			listaNotificaciones.add(new Notificacion(elem, 1));
+			notificaciones.add(new Notificacion(elem, 1));
+		}
+	}
+	public void eliminarElemento(int id) {
+		
+		listaElementos.get(id).resetearEtiquetas();
+		Elemento e = listaElementos.remove(id);
+		
+		
+		Iterator<Notificacion> it = listaNotificaciones.iterator();
+		Notificacion aux;
+		while(it.hasNext()) {
+			aux=it.next();
+			if(aux.getElem().equals(e)) {
+				it.remove();
+			}
 		}
 		
-		listaElementos.put(elem.getId(), elem);
-	}
-	
-	public void eliminarElemento(int id) {
-		listaElementos.get(id).resetearEtiquetas();
-		listaElementos.remove(id);
+		
+		
 	}
 
 	public Elemento conseguirElemento(int id) {

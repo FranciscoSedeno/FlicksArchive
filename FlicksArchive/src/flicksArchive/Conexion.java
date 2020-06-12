@@ -36,8 +36,6 @@ public class Conexion {
 		long millis=System.currentTimeMillis();
 		Date today=new Date(millis);
 		
-		Date monthlater = Date.valueOf(today.toLocalDate().plusMonths(1));
-		Date weekago = Date.valueOf(today.toLocalDate().minusWeeks(1));
 
 		ResultSet rs= st.executeQuery("SELECT NombreEtiqueta FROM Etiqueta WHERE NombreUsuario LIKE '"+nombre+"' ;");
 		while(rs.next()) {
@@ -65,15 +63,7 @@ public class Conexion {
 					}
 				}
 			}
-			Date datep =e.getFechaPublicacion();
-			Date dater =e.getFechaRetirada();
-			
-			if(datep.before(today) && datep.after(weekago)) {
-				notificaciones.add(new Notificacion(e, 0));
-			}
-			if(dater.after(today) && dater.before(monthlater)){
-				notificaciones.add(new Notificacion(e, 1));
-			}
+			Lista.actualizarNotificaciones(today, e, notificaciones);
 			plataformas.add(rs.getString(10).toUpperCase());
 		}
 		st.close();

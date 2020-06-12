@@ -162,6 +162,8 @@ public class Filtro {
 	 * Metodos para filtrar una coleccion de elementos.
 	 */
 	
+	//Filtra una coleccion de elementos de acuerdo a una serie de parametros, más de 3 etiquetas 
+	//se considera una situacion que no debe producir resultados.
 	public List<Elemento> filtrado(Collection<Elemento> listaElementos){
 		
 		

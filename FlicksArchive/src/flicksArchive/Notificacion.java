@@ -38,6 +38,10 @@ public class Notificacion {
 		sb.append(".");
 		return sb.toString();
 	}
+	public Elemento getElem() {
+		return elem;
+	}
+	
 	public motivoNotificacion getMotivo() {
 		return motivo;
 	}

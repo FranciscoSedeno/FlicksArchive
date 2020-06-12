@@ -245,6 +245,21 @@ public class Elemento implements Comparable<Elemento>{
 		
 	}
 	@Override
+	public boolean equals(Object o) {
+		boolean resultado=false;
+		if(o!= null && o instanceof Elemento) {
+			Elemento e = (Elemento) o;
+			resultado= id == e.id;
+			
+		}
+		return resultado;
+	}
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return this.id;
+	}
+	@Override
 	public int compareTo(Elemento o) {
 		return (titulo.toUpperCase()).compareTo(o.titulo.toUpperCase());
 	}

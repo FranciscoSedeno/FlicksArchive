@@ -3,8 +3,11 @@ import static org.mockito.Mockito.*;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import org.junit.jupiter.api.*;
 
@@ -128,6 +131,31 @@ public class testFiltrosOrdenaciones {
 		assertTrue(c.contains(e4));
 	}
 	@Test
+	public void testfiltroImposible() {
+		filtro.anadirEtiquetaFiltrada(filtro.pedirEtiqueta("A"));
+		filtro.anadirEtiquetaFiltrada(filtro.pedirEtiqueta("B"));
+		filtro.anadirEtiquetaFiltrada(filtro.pedirEtiqueta("C"));
+		filtro.anadirEtiquetaFiltrada(filtro.pedirEtiqueta("D"));
+		Collection<Elemento> c = lista.getListaFiltrada();
+		assertTrue(c.isEmpty());
+		Etiqueta e = filtro.pedirEtiqueta("NUEVA");
+		Etiqueta e2 = filtro.pedirEtiqueta("NUEVA2");
+		assertEquals(0, e.getContador());
+		assertEquals(0, e2.getContador());
+		List<String> li= new ArrayList<>();
+		li.add(e2.getNombre());
+		li.add(e.getNombre());
+		filtro.setEtiquetas(li);
+		c = lista.getListaFiltrada();
+		assertTrue(c.isEmpty());
+	}
+	@Test
+	public void testfiltroEtiquetaSinUso() {
+		String s[]= {"NUEVA","nUEVA2"};
+		assertThrows(IllegalArgumentException.class, ()->filtro.setEtiquetas(Arrays.asList(s)),"Las siguientes etiquetas no están registradas: "+s.toString());
+		
+	}
+	@Test
 	public void filtrarTest() throws SQLException {
 		filtro.setEstadoBuscado(estadoVisualizacion.PENDIENTE);
 		filtro.setFavoritoActivo(true);
@@ -153,7 +181,7 @@ public class testFiltrosOrdenaciones {
 		assertEquals(1,c.size() );
 		assertTrue(c.contains(e4));
 		filtro.borrarEtiquetaFiltrada(filtro.buscaEtiqueta("E"));
-		filtro.setFragmentoTitulo("");
+		filtro.setFragmentoTitulo(null);
 		filtro.setEstadoBuscado(null);
 		c=lista.getListaFiltrada();
 		assertEquals(4,c.size() );

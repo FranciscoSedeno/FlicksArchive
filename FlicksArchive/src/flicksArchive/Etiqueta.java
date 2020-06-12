@@ -56,7 +56,7 @@ public class Etiqueta implements Comparable<Etiqueta>{
 	}
 	@Override
 	public int compareTo(Etiqueta o) {
-		return this.contador - o.getContador();
+		return Integer.compare(contador, o.contador);
 	}
 	
 	
