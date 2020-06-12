@@ -106,6 +106,28 @@ public class testFiltrosOrdenaciones {
 			
 	}
 	@Test
+	public void filtrarPeliculasYSeries() {
+		e2.setPelicula(true);
+		e3.setPelicula(true);
+		filtro.setPelicula(true);
+		Collection<Elemento> c=lista.getListaFiltrada();
+		assertEquals(2,c.size());
+		assertTrue(c.contains(e3));
+		assertTrue(c.contains(e2));
+		filtro.setPelicula(false);
+		c=lista.getListaFiltrada();
+		assertEquals(2,c.size());
+		assertTrue(c.contains(e1));
+		assertTrue(c.contains(e4));
+		filtro.setPelicula(null);
+		c=lista.getListaFiltrada();
+		assertEquals(4,c.size());
+		assertTrue(c.contains(e1));
+		assertTrue(c.contains(e2));
+		assertTrue(c.contains(e3));
+		assertTrue(c.contains(e4));
+	}
+	@Test
 	public void filtrarTest() throws SQLException {
 		filtro.setEstadoBuscado(estadoVisualizacion.PENDIENTE);
 		filtro.setFavoritoActivo(true);
@@ -173,5 +195,6 @@ public class testFiltrosOrdenaciones {
 		assertSame(it.next(), e3);
 		assertSame(it.next(), e4);
 	}
+	
 	
 }
