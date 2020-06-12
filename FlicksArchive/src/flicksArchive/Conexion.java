@@ -98,7 +98,7 @@ public class Conexion {
 			
 			Statement st = conn.createStatement();
 			ResultSet rs=st.executeQuery("SELECT NombreUsuario FROM Password WHERE NombreUsuario LIKE '"+nombre.toUpperCase()+"' AND Password LIKE '"+encriptarMD5(contrase)+"';" );
-			System.out.println(encriptarMD5(contrase));
+			
 			r=rs.next();
 			
 		} catch (SQLException e) {
