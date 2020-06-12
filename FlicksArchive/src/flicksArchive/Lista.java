@@ -1,5 +1,6 @@
 package flicksArchive;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -104,6 +105,23 @@ public class Lista {
 	 * Funciones para manipular la Lista de Elementos
 	 */
 	public void añadirElemento(Elemento elem) {
+		
+		long millis=System.currentTimeMillis();
+		Date today=new Date(millis);
+		
+		Date monthlater = Date.valueOf(today.toLocalDate().plusMonths(1));
+		Date weekago = Date.valueOf(today.toLocalDate().minusWeeks(1));
+		
+		Date datep =elem.getFechaPublicacion();
+		Date dater =elem.getFechaRetirada();
+		
+		if(datep.before(today) && datep.after(weekago)) {
+			listaNotificaciones.add(new Notificacion(elem, 0));
+		}
+		if(dater.after(today) && dater.before(monthlater)){
+			listaNotificaciones.add(new Notificacion(elem, 1));
+		}
+		
 		listaElementos.put(elem.getId(), elem);
 	}
 	
