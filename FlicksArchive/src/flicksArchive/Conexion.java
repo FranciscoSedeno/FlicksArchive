@@ -3,7 +3,9 @@ package flicksArchive;
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
-
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class Conexion {
 	 private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -29,6 +31,22 @@ public class Conexion {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public static String encriptarMD5(String input) {
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			byte[] messageDigest = md .digest(input.getBytes());
+			BigInteger number = new BigInteger(1,messageDigest);
+			String hashtext= number.toString(16);
+			while(hashtext.length()<32) {
+				hashtext = "0"+hashtext;
+			}
+			return hashtext;
+		}catch (NoSuchAlgorithmException e) {
+			// TODO: handle exception
+			System.err.println("Error encriptando.");
+		}
+		return input;
 	}
 	public void inicializarDatos(Map<Integer,Elemento> lista,Set<String> plataformas,Filtro filtro,List<Notificacion> notificaciones) throws SQLException {
 		Statement st= conn.createStatement();
@@ -79,7 +97,8 @@ public class Conexion {
 		try(Connection conn = DriverManager.getConnection(DB_URL + "/" + DB_SCHEMA,USER,PASS)){
 			
 			Statement st = conn.createStatement();
-			ResultSet rs=st.executeQuery("SELECT NombreUsuario FROM Password WHERE NombreUsuario LIKE '"+nombre.toUpperCase()+"' AND Password LIKE '"+contrase+"';" );
+			ResultSet rs=st.executeQuery("SELECT NombreUsuario FROM Password WHERE NombreUsuario LIKE '"+nombre.toUpperCase()+"' AND Password LIKE '"+encriptarMD5(contrase)+"';" );
+			System.out.println(encriptarMD5(contrase));
 			r=rs.next();
 			
 		} catch (SQLException e) {
@@ -117,7 +136,7 @@ public class Conexion {
 		try(Connection conn = DriverManager.getConnection(DB_URL + "/" + DB_SCHEMA,USER,PASS)){
 			
 			Statement st = conn.createStatement();
-			st.executeUpdate("INSERT INTO Password VALUES ('"+nombre.toUpperCase()+"','"+contrase+"');" );
+			st.executeUpdate("INSERT INTO Password VALUES ('"+nombre.toUpperCase()+"','"+encriptarMD5(contrase)+"');" );
 			
 			
 		} catch (SQLException e) {
@@ -135,6 +154,7 @@ public class Conexion {
 		st.close();
 		return sol;
 	}
+	
 	public Elemento buscarElemento(int id, Filtro f) throws SQLException {
 		Statement st = conn.createStatement();
 		Elemento elem=null;
