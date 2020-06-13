@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.*;
 
-import com.mysql.fabric.xmlrpc.base.Array;
 
 import flicksArchive.Notificacion.motivoNotificacion;
 
