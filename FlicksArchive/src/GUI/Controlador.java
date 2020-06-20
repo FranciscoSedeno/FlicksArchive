@@ -74,9 +74,12 @@ public class Controlador implements ActionListener, ChangeListener {
 		try {
 			if(ventana.getIndicetab() == 0)
 			{
-				ventana.refrescar(lista);
+				
 				ventana.setModelComboBox(lista);
+				ventana.estadoFiltrado(lista.getFiltro());
 				ventana.setTextoBuscador("");
+				ventana.refrescar(lista);
+				
 		    	ventana.borraTodo();
 			} else if (ventana.getIndicetab()==2) {
 				ventana.escribeNotificaciones(lista.logNotificaciones());
