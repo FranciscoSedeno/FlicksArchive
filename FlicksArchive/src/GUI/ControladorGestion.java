@@ -27,7 +27,6 @@ public class ControladorGestion implements ActionListener {
 			if (comando[0].equals("GUARDAR")) {
 				try {
 				gestion.actualizarelemento(lista.getFiltro(), elem);
-				ventana.setModelComboBox(lista);
 				gestion.dispose();
 				} catch (NumberFormatException exc) {
 					// TODO: handle exception
